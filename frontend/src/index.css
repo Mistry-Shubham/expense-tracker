@@ -1,5 +1,26 @@
+:root {
+	--background-hr-fr: rgba(0, 0, 0, 0.5);
+}
+
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+		'Lucida Sans', Arial, sans-serif;
+}
+
+.primary-button {
+	background-color: #7f5c00;
+	border: none;
+	border-radius: 10px;
+}
+
+.primary-button:hover {
+	background-color: #997a2a;
+	cursor: pointer;
+}
+
+.margin-right {
+	margin-right: 10px;
 }
