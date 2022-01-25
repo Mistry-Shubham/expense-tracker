@@ -1,0 +1,71 @@
+.main-container {
+	margin: 30px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+.main-container .screen-title {
+	font-size: xx-large;
+	margin-bottom: 30px;
+}
+
+.home-screen .total-info-bar {
+	display: flex;
+	justify-content: space-evenly;
+	margin: 60px 0px;
+}
+
+.home-screen .info-bar-containers {
+	display: flex;
+	flex-direction: column;
+	height: 100px;
+	justify-content: space-around;
+	align-items: center;
+	padding: 0px 120px;
+	border-radius: 20px;
+}
+
+.info-bar-containers .info-bar-title {
+	font-size: large;
+}
+
+.info-bar-containers .info-bar-content {
+	font-size: xx-large;
+}
+
+.home-screen .total-amount-alloted {
+	background-color: rgba(0, 0, 255, 0.2);
+}
+.home-screen .total-amount-remaining {
+	background-color: rgba(0, 255, 0, 0.2);
+}
+.home-screen .total-amount-spent {
+	background-color: rgba(255, 0, 0, 0.2);
+}
+
+.home-screen .expenses-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+}
+
+@media only screen and (max-width: 700px) {
+	.main-container {
+		margin: 10px;
+	}
+
+	.home-screen .expenses-grid {
+		margin: 10px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.home-screen .total-info-bar {
+		flex-direction: column;
+		margin-bottom: 30px;
+	}
+
+	.home-screen .info-bar-containers {
+		margin-bottom: 20px;
+	}
+}

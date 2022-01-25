@@ -107,3 +107,76 @@
 		font-size: medium;
 	}
 }
+
+.expense-container {
+	display: flex;
+	flex-direction: column;
+	background-color: rgba(0, 0, 0, 0.4);
+	border-radius: 20px;
+	padding: 15px 25px;
+	height: fit-content;
+	width: 100%;
+}
+
+#expense-warn {
+	background-color: rgba(255, 0, 0, 0.4);
+}
+
+.expense-container:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.expense-heading {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.expense-heading .category {
+	font-size: x-large;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.expense-heading .expense-remaining {
+	font-size: large;
+	color: rgb(40, 200, 69);
+}
+
+.expense-amount {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 10px 0px;
+}
+
+.expense-amount .amount-label {
+	margin-left: 20px;
+	color: rgb(0, 123, 255);
+	font-size: 20px;
+}
+
+.expense-list {
+	margin: 0px 30px;
+}
+
+.expense-list .list-container {
+	display: grid;
+	grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	margin-bottom: 5px;
+	padding-bottom: 2px;
+}
+
+.expense-list .list-container p {
+	color: rgba(255, 255, 255, 0.6);
+}
+
+@media only screen and (max-width: 700px) {
+	.expense-list {
+		margin: 0px;
+	}
+
+	.expense-list .list-container {
+		grid-template-columns: 0.2fr 1.2fr 0.6fr 1fr 1fr;
+	}
+}
