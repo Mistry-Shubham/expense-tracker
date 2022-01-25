@@ -1,8 +1,21 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import Expense from '../components/Expense';
-import expenses from '../expenses';
 import './screens-style.css';
 
 const HomeScreen = () => {
+	const [expenses, setExpenses] = useState([]);
+
+	useEffect(() => {
+		const fetchExpenses = async () => {
+			const { data } = await axios.get('/api/expenses');
+			setExpenses(data);
+		};
+
+		fetchExpenses();
+	}, []);
+
+	console.log(expenses);
 	return (
 		<div className="main-container">
 			<div className="home-screen">

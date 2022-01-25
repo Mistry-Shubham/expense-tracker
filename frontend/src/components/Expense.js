@@ -14,7 +14,7 @@ const Expense = ({ expense }) => {
 					progress={expense.totalSpent}
 					max={expense.maxAmount}
 				/>
-				<label for="progress-bar" className="amount-label">
+				<label htmlFor="progress-bar" className="amount-label">
 					₹{expense.totalSpent}/{expense.maxAmount}
 				</label>
 			</div>
@@ -24,11 +24,8 @@ const Expense = ({ expense }) => {
 						<p>{idx + 1}</p>
 						<p>{item.name}</p>
 						<p>{`₹${item.price}`}</p>
-						<p>{`${item.addedAt}`.substring(16, 25)}</p>
-						<p>
-							{`${item.addedAt.getDate()}`}/{`${item.addedAt.getMonth() + 1}`}/
-							{`${item.addedAt.getFullYear()}`}
-						</p>
+						<p>{`${item.addedAt}`.substring(11, 19)}</p>
+						<p>{item.addedAt.substring(0, 10)}</p>
 					</div>
 				))}
 			</div>
