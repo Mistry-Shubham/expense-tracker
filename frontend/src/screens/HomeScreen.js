@@ -15,7 +15,6 @@ const HomeScreen = () => {
 		fetchExpenses();
 	}, []);
 
-	console.log(expenses);
 	return (
 		<div className="main-container">
 			<div className="home-screen">

@@ -24,7 +24,11 @@ const Expense = ({ expense }) => {
 						<p>{idx + 1}</p>
 						<p>{item.name}</p>
 						<p>{`₹${item.price}`}</p>
-						<p>{`${item.addedAt}`.substring(11, 19)}</p>
+						<p>
+							{item.addedAt.substring(12).split(':')[0]}:
+							{item.addedAt.substring(12).split(':')[1]}
+							{` ${item.addedAt.substring(12).split(' ')[1].toUpperCase()}`}
+						</p>
 						<p>{item.addedAt.substring(0, 10)}</p>
 					</div>
 				))}
