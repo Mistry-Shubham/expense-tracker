@@ -1,9 +1,12 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import chalk from 'chalk';
+import connectDB from './config/db.js';
 import expenses from './data/expenses.js';
 
 dotenv.config();
+
+connectDB();
 
 const app = express();
 

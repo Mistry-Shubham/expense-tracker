@@ -6,9 +6,9 @@ const expenses = [
 		maxAmount: 2000,
 		totalSpent: 500,
 		expenseList: [
-			{ name: 'Movie', price: 200, addedAt: date },
-			{ name: 'Games', price: 200, addedAt: date },
-			{ name: 'Other', price: 100, addedAt: date },
+			{ name: 'Movie', amount: 200, updatedAt: date },
+			{ name: 'Games', amount: 200, updatedAt: date },
+			{ name: 'Other', amount: 100, updatedAt: date },
 		],
 		createdAt: date,
 	},
@@ -17,8 +17,8 @@ const expenses = [
 		maxAmount: 3000,
 		totalSpent: 1200,
 		expenseList: [
-			{ name: 'Clothes', price: 800, addedAt: date },
-			{ name: 'Grocery', price: 400, addedAt: date },
+			{ name: 'Clothes', amount: 800, updatedAt: date },
+			{ name: 'Grocery', amount: 400, updatedAt: date },
 		],
 		createdAt: date,
 	},

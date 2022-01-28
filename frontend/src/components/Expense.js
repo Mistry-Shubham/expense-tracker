@@ -23,13 +23,13 @@ const Expense = ({ expense }) => {
 					<div key={idx + 1} className="list-container">
 						<p>{idx + 1}</p>
 						<p>{item.name}</p>
-						<p>{`₹${item.price}`}</p>
+						<p>{`₹${item.amount}`}</p>
 						<p>
-							{item.addedAt.substring(12).split(':')[0]}:
-							{item.addedAt.substring(12).split(':')[1]}
-							{` ${item.addedAt.substring(12).split(' ')[1].toUpperCase()}`}
+							{item.updatedAt.substring(12).split(':')[0]}:
+							{item.updatedAt.substring(12).split(':')[1]}
+							{` ${item.updatedAt.substring(12).split(' ')[1].toUpperCase()}`}
 						</p>
-						<p>{item.addedAt.substring(0, 10)}</p>
+						<p>{item.updatedAt.substring(0, 10)}</p>
 					</div>
 				))}
 			</div>
