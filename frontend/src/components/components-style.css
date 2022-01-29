@@ -1,5 +1,121 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
+/* CSS for Spinner */
+.loader-spinner {
+	border: 6px solid #f3f3f3;
+	border-top: 6px solid #3498db;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	margin-inline: auto;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* CSS for Alert Message */
+.alert-message {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 5px 30px;
+	width: 90%;
+	margin-inline: auto;
+	color: black;
+	font-size: 25px;
+	border-radius: 20px;
+}
+
+#info {
+	background-color: rgba(190, 227, 248, 0.8);
+	border: 2px solid blue;
+}
+
+#info .alert-icon {
+	fill: #3182ce;
+	font-size: 30px;
+	margin-right: 1vw;
+}
+
+#success {
+	background-color: rgba(198, 246, 213, 0.8);
+	border: 2px solid green;
+}
+
+#success .alert-icon {
+	fill: #38a169;
+	font-size: 30px;
+	margin-right: 1vw;
+}
+
+#error {
+	background-color: rgba(254, 215, 215, 0.8);
+	border: 2px solid red;
+}
+
+#error .alert-icon {
+	fill: #e53e3e;
+	font-size: 30px;
+	margin-right: 1vw;
+}
+
+/* CSS for Form Container */
+.form-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.form-container form {
+	display: flex;
+	flex-direction: column;
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 30px 40px;
+	border-radius: 20px;
+	width: 600px;
+	height: fit-content;
+}
+
+.form-container .spacer {
+	height: 20px;
+}
+
+.form-container .form-label {
+	margin-top: 10px;
+	font-size: 1.2rem;
+}
+
+.form-container .form-input {
+	color: rgb(0, 0, 0);
+	background-color: rgba(255, 255, 255, 0.6);
+	margin-top: 10px;
+	font-size: 1.2rem;
+	padding: 5px 20px;
+	border-radius: 50vh;
+}
+
+.form-container .form-input:focus {
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.form-container .form-submit-button {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	width: 100px;
+	margin-top: 10px;
+
+	font-size: large;
+}
+
+/* CSS for Header */
 .header .container {
 	display: flex;
 	height: 15vh;
@@ -35,6 +151,45 @@
 	align-items: center;
 }
 
+.header .dropdown {
+	display: inline-block;
+	position: relative;
+}
+
+.header #dropdown-content-close {
+	display: none;
+}
+
+.header #dropdown-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	background-color: rgba(255, 255, 255, 1);
+	border-radius: 10px;
+	overflow: hidden;
+	top: 50px;
+	right: 2vw;
+	height: fit-content;
+	width: 150%;
+}
+
+.header .dropdown-icon {
+	fill: rgba(0, 0, 0, 0.6);
+}
+
+.header .dropdown-item {
+	display: flex;
+	align-items: center;
+	font-size: large;
+	padding: 15px;
+	color: rgba(0, 0, 0, 0.6);
+}
+
+.header .dropdown-item:hover {
+	background-color: #ddd;
+}
+
 .header .add-expense-button {
 	display: flex;
 	background-color: #105565;
@@ -56,12 +211,17 @@
 .header .menu {
 	display: none;
 	font-size: xx-large;
-	color: #ccc;
 }
 
-.header .menu:hover {
-	color: cyan;
+.header .menu .menu-icon {
+	fill: #ccc;
 }
+
+.header .menu .menu-icon:hover {
+	fill: cyan;
+}
+
+/* CSS for Footer */
 
 .footer .container {
 	display: flex;
@@ -77,36 +237,7 @@
 	color: #ccc;
 }
 
-@media only screen and (max-width: 700px) {
-	.header .menu {
-		display: flex;
-	}
-
-	.header .navs {
-		display: none;
-	}
-
-	.header .login-button,
-	.header .add-expense-button {
-		margin-bottom: 20px;
-	}
-
-	.header #hidden {
-		position: absolute;
-		right: 0px;
-		top: 15vh;
-		height: auto;
-		width: 100%;
-		background-color: var(--background-hr-fr);
-		display: flex;
-		justify-content: space-evenly;
-		align-items: center;
-	}
-
-	.footer .content {
-		font-size: medium;
-	}
-}
+/* CSS for Expense Card */
 
 .expense-container {
 	display: flex;
@@ -173,6 +304,42 @@
 }
 
 @media only screen and (max-width: 700px) {
+	.alert-message {
+		padding: 5px 10px;
+	}
+
+	.form-container form {
+		width: 90vw;
+	}
+
+	.header .menu {
+		display: flex;
+	}
+
+	.header .navs {
+		display: none;
+	}
+
+	.header .login-button,
+	.header .add-expense-button {
+		margin-bottom: 20px;
+	}
+
+	.header #hidden {
+		position: absolute;
+		right: 0px;
+		top: 15vh;
+		height: auto;
+		width: 100%;
+		background-color: var(--background-hr-fr);
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+	}
+
+	.footer .content {
+		font-size: medium;
+	}
 	.expense-list {
 		margin: 0px;
 	}

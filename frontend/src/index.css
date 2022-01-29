@@ -47,3 +47,11 @@ body {
 .margin-right {
 	margin-right: 10px;
 }
+
+.margin-left {
+	margin-left: 10px;
+}
+
+.remove-link-underline {
+	text-decoration: none;
+}
