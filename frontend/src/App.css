@@ -1,3 +1,4 @@
+/* h1 Background Image */
 .background-image {
 	min-height: 100vh;
 	width: 100vw;
@@ -8,6 +9,7 @@
 	background-size: cover;
 }
 
+/* h1 Background Filter */
 .background-filter {
 	min-height: 100%;
 	width: 100%;
@@ -16,6 +18,7 @@
 	background-attachment: fixed;
 }
 
+/* h1 Display Dimensions */
 .App {
 	min-height: 75vh;
 	max-width: 100vw;

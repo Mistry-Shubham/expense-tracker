@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
 
-/* CSS for Spinner */
+/* h1 Spinner */
 .loader-spinner {
 	border: 6px solid #f3f3f3;
 	border-top: 6px solid #3498db;
@@ -20,7 +20,7 @@
 	}
 }
 
-/* CSS for Alert Message */
+/* h1 Alert Message */
 .alert-message {
 	display: flex;
 	align-items: center;
@@ -33,6 +33,7 @@
 	border-radius: 20px;
 }
 
+/* h2 type - info */
 #info {
 	background-color: rgba(190, 227, 248, 0.8);
 	border: 2px solid blue;
@@ -44,6 +45,7 @@
 	margin-right: 1vw;
 }
 
+/* h2 type - success */
 #success {
 	background-color: rgba(198, 246, 213, 0.8);
 	border: 2px solid green;
@@ -55,6 +57,7 @@
 	margin-right: 1vw;
 }
 
+/* h2 type - error */
 #error {
 	background-color: rgba(254, 215, 215, 0.8);
 	border: 2px solid red;
@@ -66,13 +69,14 @@
 	margin-right: 1vw;
 }
 
-/* CSS for Form Container */
+/* h1 Form Container */
 .form-container {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
+
 .form-container form {
 	display: flex;
 	flex-direction: column;
@@ -83,15 +87,18 @@
 	height: fit-content;
 }
 
+/* h2 Spacer */
 .form-container .spacer {
 	height: 20px;
 }
 
+/* h2 Label */
 .form-container .form-label {
 	margin-top: 10px;
 	font-size: 1.2rem;
 }
 
+/* h2 Input */
 .form-container .form-input {
 	color: rgb(0, 0, 0);
 	background-color: rgba(255, 255, 255, 0.6);
@@ -105,6 +112,7 @@
 	background-color: rgba(255, 255, 255, 1);
 }
 
+/* h2 Button */
 .form-container .form-submit-button {
 	display: flex;
 	align-items: center;
@@ -115,7 +123,7 @@
 	font-size: large;
 }
 
-/* CSS for Header */
+/* h1 Header */
 .header .container {
 	display: flex;
 	height: 15vh;
@@ -125,6 +133,7 @@
 	padding: 5px 60px;
 }
 
+/* h2 Title */
 .header .title {
 	color: #ccc;
 	letter-spacing: 1px;
@@ -138,10 +147,12 @@
 	cursor: default;
 }
 
+/* h2 Navigations */
 .header .navs {
 	display: flex;
 }
 
+/* h2 Login Button */
 .header .login-button {
 	display: flex;
 	padding: 10px 20px;
@@ -151,15 +162,18 @@
 	align-items: center;
 }
 
+/* h2 Dropdown */
 .header .dropdown {
 	display: inline-block;
 	position: relative;
 }
 
+/* h2 Close Dropdown */
 .header #dropdown-content-close {
 	display: none;
 }
 
+/* h2 Show Dropdown */
 .header #dropdown-content {
 	display: flex;
 	flex-direction: column;
@@ -174,10 +188,12 @@
 	width: 150%;
 }
 
+/* h2 Icon */
 .header .dropdown-icon {
 	fill: rgba(0, 0, 0, 0.6);
 }
 
+/* h2 Dropdown items */
 .header .dropdown-item {
 	display: flex;
 	align-items: center;
@@ -190,6 +206,7 @@
 	background-color: #ddd;
 }
 
+/* h2 Add Expense Button */
 .header .add-expense-button {
 	display: flex;
 	background-color: #105565;
@@ -204,10 +221,13 @@
 	background-color: #2b8296;
 }
 
+/* h2 Menu */
+/* h2 Show Menu */
 .header #hidden {
 	display: flex;
 }
 
+/* h2 Close Menu */
 .header .menu {
 	display: none;
 	font-size: xx-large;
@@ -221,7 +241,7 @@
 	fill: cyan;
 }
 
-/* CSS for Footer */
+/* h1 Footer */
 
 .footer .container {
 	display: flex;
@@ -237,7 +257,7 @@
 	color: #ccc;
 }
 
-/* CSS for Expense Card */
+/* h1 Expense Card */
 
 .expense-container {
 	display: flex;
@@ -249,14 +269,16 @@
 	width: 100%;
 }
 
-#expense-warn {
-	background-color: rgba(255, 0, 0, 0.4);
-}
-
 .expense-container:hover {
 	background-color: rgba(0, 255, 255, 0.1);
 }
 
+/* h2 Exceed limit warning */
+#expense-warn {
+	background-color: rgba(255, 0, 0, 0.4);
+}
+
+/* h2 Heading */
 .expense-heading {
 	display: flex;
 	justify-content: space-between;
@@ -273,6 +295,7 @@
 	color: rgb(40, 200, 69);
 }
 
+/* h2 Progress Bar */
 .expense-amount {
 	display: flex;
 	justify-content: space-between;
@@ -286,6 +309,7 @@
 	font-size: 20px;
 }
 
+/* h2 Expense List */
 .expense-list {
 	margin: 0px 30px;
 }
@@ -304,14 +328,17 @@
 }
 
 @media only screen and (max-width: 700px) {
+	/* h1 Alert Message */
 	.alert-message {
 		padding: 5px 10px;
 	}
 
+	/* h1 Form Container */
 	.form-container form {
 		width: 90vw;
 	}
 
+	/* h1 Header */
 	.header .menu {
 		display: flex;
 	}
@@ -337,9 +364,12 @@
 		align-items: center;
 	}
 
+	/* h1 Footer */
 	.footer .content {
 		font-size: medium;
 	}
+
+	/* h1 Expense List */
 	.expense-list {
 		margin: 0px;
 	}
