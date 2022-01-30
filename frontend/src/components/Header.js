@@ -13,10 +13,9 @@ import {
 import './components-style.css';
 
 const Header = () => {
+	const { userInfo } = useSelector((state) => state.userLogin);
 	const [show, setShow] = useState(false);
 	const [dropdown, setDropdown] = useState(true);
-
-	const { userInfo } = useSelector((state) => state.userLogin);
 
 	return (
 		<header className="header">
@@ -31,7 +30,7 @@ const Header = () => {
 							Add Expense
 						</button>
 					</Link>
-					{userInfo._id ? (
+					{userInfo ? (
 						<div className="dropdown">
 							<button
 								onClick={() => setDropdown(!dropdown)}

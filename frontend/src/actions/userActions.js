@@ -28,8 +28,8 @@ export const login = (email, password) => async (dispatch) => {
 		dispatch({
 			type: USER_LOGIN_FAIL,
 			payload:
-				err.respomse && err.respomse.data.message
-					? err.respomse.data.message
+				err.response && err.response.data.message
+					? err.response.data.message
 					: err.message,
 		});
 	}
