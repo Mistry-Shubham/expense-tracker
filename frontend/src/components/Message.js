@@ -1,3 +1,5 @@
+import './components-style.css';
+
 import {
 	IoAlertCircleSharp,
 	IoCheckmarkCircleSharp,

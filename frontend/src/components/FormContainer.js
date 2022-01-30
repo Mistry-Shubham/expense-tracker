@@ -1,3 +1,5 @@
+import './components-style.css';
+
 const FormContainer = ({ handler, children }) => {
 	return (
 		<div className="form-container">

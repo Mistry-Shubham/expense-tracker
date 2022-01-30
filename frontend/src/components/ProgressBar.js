@@ -1,3 +1,5 @@
+import './components-style.css';
+
 const ProgressBar = ({ progress, max }) => {
 	const percentage = (progress / max) * 100;
 

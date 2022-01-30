@@ -1,3 +1,5 @@
+import './components-style.css';
+
 const Loader = ({ size = '50px', border = '6px', color = '#3498db' }) => {
 	return (
 		<div

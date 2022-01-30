@@ -6,6 +6,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import FormContainer from '../components/FormContainer';
 import { login } from '../actions/userActions';
+import './screens-style.css';
 
 const LoginScreen = () => {
 	const dispatch = useDispatch();

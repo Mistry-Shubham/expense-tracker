@@ -1,4 +1,5 @@
 import ProgressBar from './ProgressBar';
+import './components-style.css';
 
 const Expense = ({ expense }) => {
 	const remaining = expense.maxAmount - expense.totalSpent;

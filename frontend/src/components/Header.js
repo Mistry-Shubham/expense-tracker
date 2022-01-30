@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import {
 	IoLogInSharp,
@@ -10,17 +11,34 @@ import {
 	IoLogOutSharp,
 	IoIdCardSharp,
 } from 'react-icons/io5';
+import { logout } from '../actions/userActions';
 import './components-style.css';
 
 const Header = () => {
-	const { userInfo } = useSelector((state) => state.userLogin);
+	const dispatch = useDispatch();
+
 	const [show, setShow] = useState(false);
 	const [dropdown, setDropdown] = useState(true);
 
+	const { userInfo } = useSelector((state) => state.userLogin);
+
+	const logoutHandler = () => {
+		dispatch(logout());
+		setDropdown(true);
+		setShow(false);
+	};
+	console.log(show);
 	return (
 		<header className="header">
 			<div className="container">
-				<Link to="/" className="remove-link-underline">
+				<Link
+					to="/"
+					onClick={() => {
+						setDropdown(true);
+						setShow(false);
+					}}
+					className="remove-link-underline"
+				>
 					<h1 className="title">Expense Tracker</h1>
 				</Link>
 				<div className="navs" id={show ? 'hidden' : ''}>
@@ -43,13 +61,24 @@ const Header = () => {
 							<div
 								id={dropdown ? 'dropdown-content-close' : 'dropdown-content'}
 							>
-								<Link to={'/profile'} className="remove-link-underline">
+								<Link
+									to={'/profile'}
+									onClick={() => {
+										setDropdown(true);
+										setShow(false);
+									}}
+									className="remove-link-underline"
+								>
 									<div className="dropdown-item">
 										<IoIdCardSharp className="margin-right dropdown-icon" />
 										{`Profile - ${userInfo.firstName} ${userInfo.lastName}`}
 									</div>
 								</Link>
-								<Link to={'/'} className="remove-link-underline">
+								<Link
+									onClick={logoutHandler}
+									to={'/login'}
+									className="remove-link-underline"
+								>
 									<div className="dropdown-item">
 										<IoLogOutSharp className="margin-right dropdown-icon" />
 										Logout
