@@ -85,9 +85,8 @@ export const authUser = asyncHandler(async (req, res) => {
 });
 
 //@desc   	Get user profile
-//route     Get/api/users/profile
+//route     GET/api/users/profile
 //access    private
-
 export const getUserProfile = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.user._id);
 
@@ -123,6 +122,63 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 			email: user.email,
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
+		});
+	} else {
+		res.status(404);
+		throw new Error('User not found');
+	}
+});
+
+//@desc   	Update user profile
+//route     PUT/api/users/profile
+//access    private
+export const updateUserProfile = asyncHandler(async (req, res) => {
+	const { firstName, lastName, email, password, dateOfBirth } = req.body;
+
+	const user = await User.findById(req.user._id);
+
+	const birthYear = new Date(dateOfBirth).getFullYear();
+	const birthMonth = new Date(dateOfBirth).getMonth() + 1;
+	const birthDay = new Date(dateOfBirth).getDate();
+
+	const todayYear = new Date().getFullYear();
+	const todayMonth = new Date().getMonth() + 1;
+	const todayDay = new Date().getDate();
+
+	let calculatedAge;
+	if (todayMonth > birthMonth) {
+		calculatedAge = todayYear - birthYear;
+	} else if (todayMonth === birthMonth) {
+		if (todayDay >= birthDay) {
+			calculatedAge = todayYear - birthYear;
+		} else {
+			calculatedAge = todayYear - birthYear - 1;
+		}
+	} else {
+		calculatedAge = todayYear - birthYear - 1;
+	}
+
+	if (user) {
+		user.firstName = firstName;
+		user.lastName = lastName;
+		user.email = email;
+		if (dateOfBirth) {
+			user.dateOfBirth = dateOfBirth;
+			user.age = calculatedAge;
+		}
+		if (password) {
+			user.password = password;
+		}
+
+		const updatedUser = await user.save();
+		res.json({
+			_id: updatedUser._id,
+			firstName: updatedUser.firstName,
+			lastName: updatedUser.lastName,
+			email: updatedUser.email,
+			dateOfBirth: updatedUser.dateOfBirth,
+			age: updatedUser.age,
+			token: generateToken(updatedUser._id),
 		});
 	} else {
 		res.status(404);

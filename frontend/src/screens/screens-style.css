@@ -60,6 +60,11 @@
 }
 
 /* h1 Profile Screen */
+.profile-screen {
+	position: relative;
+	height: fit-content;
+}
+
 /* h2 Profile Screen Grid */
 .profile-screen-grid {
 	display: grid;
@@ -71,6 +76,77 @@
 	font-size: larger;
 	color: rgba(255, 255, 255, 0.8);
 	margin-bottom: 40px;
+}
+
+.profile-screen .profile-edit-button {
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+}
+
+/* h2 Profile Edit Screen */
+.profile-screen .profile-edit-screen {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	max-height: 70vh;
+	overflow-y: scroll;
+}
+
+/* h2 Edit Cross Button */
+.profile-edit-screen .profile-edit-exit {
+	position: absolute;
+	font-size: larger;
+	top: 3%;
+	right: 3%;
+}
+
+.profile-edit-screen .profile-edit-exit:hover {
+	fill: red;
+	cursor: pointer;
+}
+
+/* h2 Full Name */
+.profile-edit-screen .profile-edit-full-name {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.profile-edit-screen .profile-edit-full-name .profile-edit-name {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 0px 10px;
+}
+
+/* h2 Profile Edit Buttons */
+.profile-edit-screen .profile-edit-buttons {
+	display: flex;
+	justify-content: space-evenly;
+}
+.profile-edit-screen .update-profile-button {
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	width: 40%;
+}
+
+.profile-edit-screen .profile-button-close {
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(150, 0, 0);
+	font-size: 15px;
+	width: 40%;
+}
+
+.profile-edit-screen .profile-button-close:hover {
+	background-color: rgb(180, 0, 0);
 }
 
 @media only screen and (max-width: 700px) {
@@ -99,5 +175,24 @@
 		display: flex;
 		flex-direction: column;
 		padding: 10px;
+	}
+
+	/* h1 Profile Edit Screen */
+	.profile-screen .profile-edit-screen {
+		top: 15%;
+		left: 0%;
+		background-color: rgba(0, 0, 0, 0.7);
+		border-radius: 20px;
+		max-height: 60vh;
+		overflow-y: scroll;
+	}
+
+	.profile-edit-screen .profile-edit-full-name {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.profile-edit-screen .profile-edit-full-name .profile-edit-name {
+		margin: 10px 0px;
 	}
 }
