@@ -27,7 +27,7 @@ const Header = () => {
 		setDropdown(true);
 		setShow(false);
 	};
-	console.log(show);
+
 	return (
 		<header className="header">
 			<div className="container">

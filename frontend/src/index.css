@@ -58,3 +58,7 @@ body {
 .remove-link-underline {
 	text-decoration: none;
 }
+
+.bold {
+	font-weight: bold;
+}

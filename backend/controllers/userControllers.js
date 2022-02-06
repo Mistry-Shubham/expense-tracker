@@ -15,12 +15,34 @@ export const registerUser = asyncHandler(async (req, res) => {
 		throw new Error('User already exists');
 	}
 
+	const birthYear = new Date(dateOfBirth).getFullYear();
+	const birthMonth = new Date(dateOfBirth).getMonth() + 1;
+	const birthDay = new Date(dateOfBirth).getDate();
+
+	const todayYear = new Date().getFullYear();
+	const todayMonth = new Date().getMonth() + 1;
+	const todayDay = new Date().getDate();
+
+	let calculatedAge;
+	if (todayMonth > birthMonth) {
+		calculatedAge = todayYear - birthYear;
+	} else if (todayMonth === birthMonth) {
+		if (todayDay >= birthDay) {
+			calculatedAge = todayYear - birthYear;
+		} else {
+			calculatedAge = todayYear - birthYear - 1;
+		}
+	} else {
+		calculatedAge = todayYear - birthYear - 1;
+	}
+
 	const user = await User.create({
 		firstName,
 		lastName,
 		email,
 		password,
 		dateOfBirth,
+		age: calculatedAge,
 	});
 
 	if (user) {
@@ -70,6 +92,30 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 	const user = await User.findById(req.user._id);
 
 	if (user) {
+		const birthYear = new Date(user.dateOfBirth).getFullYear();
+		const birthMonth = new Date(user.dateOfBirth).getMonth() + 1;
+		const birthDay = new Date(user.dateOfBirth).getDate();
+
+		const todayYear = new Date().getFullYear();
+		const todayMonth = new Date().getMonth() + 1;
+		const todayDay = new Date().getDate();
+
+		let calculatedAge;
+		if (todayMonth > birthMonth) {
+			calculatedAge = todayYear - birthYear;
+		} else if (todayMonth === birthMonth) {
+			if (todayDay >= birthDay) {
+				calculatedAge = todayYear - birthYear;
+			} else {
+				calculatedAge = todayYear - birthYear - 1;
+			}
+		} else {
+			calculatedAge = todayYear - birthYear - 1;
+		}
+
+		user.age = calculatedAge;
+		await user.save();
+
 		res.json({
 			_id: user._id,
 			firstName: user.firstName,
