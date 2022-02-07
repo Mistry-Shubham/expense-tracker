@@ -59,6 +59,14 @@
 	gap: 40px;
 }
 
+/* h1 Login Screen */
+
+.login-screen .redirect,
+.register-screen .redirect {
+	text-decoration: none;
+	margin-left: 5px;
+}
+
 /* h1 Profile Screen */
 .profile-screen {
 	position: relative;
@@ -109,12 +117,14 @@
 }
 
 /* h2 Full Name */
-.profile-edit-screen .profile-edit-full-name {
+.profile-edit-screen .profile-edit-full-name,
+.register-screen .register-full-name {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
 
-.profile-edit-screen .profile-edit-full-name .profile-edit-name {
+.profile-edit-screen .profile-edit-full-name .profile-edit-name,
+.register-screen .register-full-name .register-name {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -147,6 +157,17 @@
 
 .profile-edit-screen .profile-button-close:hover {
 	background-color: rgb(180, 0, 0);
+}
+
+/* h1 Register Screen */
+/* h2 Register Button */
+.register-screen .register-submit-button {
+	padding: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 15px;
+	width: 30%;
 }
 
 @media only screen and (max-width: 700px) {
@@ -187,12 +208,14 @@
 		overflow-y: scroll;
 	}
 
-	.profile-edit-screen .profile-edit-full-name {
+	.profile-edit-screen .profile-edit-full-name,
+	.register-screen .register-full-name {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.profile-edit-screen .profile-edit-full-name .profile-edit-name {
+	.profile-edit-screen .profile-edit-full-name .profile-edit-name,
+	.register-screen .register-full-name .register-name {
 		margin: 10px 0px;
 	}
 }

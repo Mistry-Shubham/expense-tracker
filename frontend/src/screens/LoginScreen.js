@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoLogInSharp } from 'react-icons/io5';
+import { FiExternalLink } from 'react-icons/fi';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import FormContainer from '../components/FormContainer';
@@ -73,6 +74,18 @@ const LoginScreen = () => {
 							</>
 						)}
 					</button>
+
+					<span className="spacer"></span>
+
+					<p>
+						Dont have an account?
+						<Link className="redirect" to="/register">
+							<span>
+								Create a new account.
+								<FiExternalLink />
+							</span>
+						</Link>
+					</p>
 				</FormContainer>
 			</div>
 		</div>
