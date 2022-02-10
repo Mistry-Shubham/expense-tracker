@@ -22,26 +22,23 @@ const expenseSchema = mongoose.Schema(
 			ref: 'User',
 			required: true,
 		},
-		expenseCategory: [
-			{
-				category: {
-					type: String,
-					required: true,
-				},
-				maxAmount: {
-					type: Number,
-					required: true,
-					default: 0,
-				},
-				totalSpent: {
-					type: Number,
-					required: true,
-					default: 0,
-				},
-				expenseList: [expenseListSchema],
-			},
-		],
+		category: {
+			type: String,
+			required: true,
+		},
+		maxAmount: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
+		totalSpent: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
+		expenseList: [expenseListSchema],
 	},
+
 	{ timestamps: true }
 );
 

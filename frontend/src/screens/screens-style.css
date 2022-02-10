@@ -10,6 +10,33 @@
 }
 
 /* h1 Home Screen */
+/* h2 Welcome Message */
+.home-screen .welcome-homescreen-message {
+	display: flex;
+	flex-direction: column;
+	height: 60vh;
+	width: 80vw;
+	justify-content: space-around;
+	align-items: center;
+	margin: auto;
+}
+
+.home-screen .welcome-title {
+	background-color: rgba(0, 0, 0, 0.4);
+	padding: 20px 40px;
+	border-radius: 20px;
+	text-align: center;
+}
+
+.home-screen .welcome-title span {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.home-screen .welcome-title span:hover {
+	color: teal;
+}
+
 /* h2 Information Bar */
 .home-screen .total-info-bar {
 	display: flex;

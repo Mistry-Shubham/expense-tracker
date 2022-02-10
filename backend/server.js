@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import chalk from 'chalk';
 import connectDB from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
+import expenseRoutes from './routes/expenseRoutes.js';
 import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
-import expenses from './data/expenses.js';
 
 dotenv.config();
 
@@ -18,10 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/users', userRoutes);
-
-app.get('/api/expenses', (req, res) => {
-	res.json(expenses);
-});
+app.use('/api/expenses', expenseRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
