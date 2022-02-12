@@ -7,7 +7,10 @@ import {
 	userUpdateProfileReducer,
 	userRegisterReducer,
 } from './reducers/userReducers';
-import { expenseMyListReducer } from './reducers/expenseReducers';
+import {
+	expenseMyListReducer,
+	createNewExpenseReducer,
+} from './reducers/expenseReducers';
 
 const reducer = combineReducers({
 	userLogin: userLoginReducer,
@@ -15,6 +18,7 @@ const reducer = combineReducers({
 	userUpdateProfile: userUpdateProfileReducer,
 	userRegister: userRegisterReducer,
 	expenseMyList: expenseMyListReducer,
+	createNewExpense: createNewExpenseReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

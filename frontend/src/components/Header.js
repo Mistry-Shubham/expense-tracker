@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -11,21 +11,28 @@ import {
 	IoLogOutSharp,
 	IoIdCardSharp,
 } from 'react-icons/io5';
+import { AddExpenseContext } from '../Contexts';
 import { logout } from '../actions/userActions';
 import './components-style.css';
 
 const Header = () => {
 	const dispatch = useDispatch();
 
+	const { addExpenseSection, setAddExpenseSection } =
+		useContext(AddExpenseContext);
+
 	const [show, setShow] = useState(false);
 	const [dropdown, setDropdown] = useState(true);
 
 	const { userInfo } = useSelector((state) => state.userLogin);
 
+	const toggleAddExpense = () => setAddExpenseSection(!addExpenseSection);
+
 	const logoutHandler = () => {
 		dispatch(logout());
 		setDropdown(true);
 		setShow(false);
+		setAddExpenseSection(false);
 	};
 
 	return (
@@ -36,6 +43,7 @@ const Header = () => {
 					onClick={() => {
 						setDropdown(true);
 						setShow(false);
+						setAddExpenseSection(false);
 					}}
 					className="remove-link-underline"
 				>
@@ -43,7 +51,10 @@ const Header = () => {
 				</Link>
 				<div className="navs" id={show ? 'hidden' : ''}>
 					<Link to="/" className="remove-link-underline">
-						<button className="add-expense-button primary-button">
+						<button
+							onClick={toggleAddExpense}
+							className="add-expense-button primary-button"
+						>
 							<IoAddSharp className="margin-right" />
 							Add Expense
 						</button>
@@ -51,7 +62,9 @@ const Header = () => {
 					{userInfo ? (
 						<div className="dropdown">
 							<button
-								onClick={() => setDropdown(!dropdown)}
+								onClick={() => {
+									setDropdown(!dropdown);
+								}}
 								className="primary-button login-button"
 							>
 								{<IoPersonSharp className="margin-right" />}

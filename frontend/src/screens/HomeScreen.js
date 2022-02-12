@@ -1,30 +1,107 @@
-import { useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { IoAddSharp, IoAddCircleSharp } from 'react-icons/io5';
+import { AddExpenseContext } from '../Contexts';
 import Expense from '../components/Expense';
+import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { listMyExpenses } from '../actions/expenseActions';
+import { listMyExpenses, createNewExpense } from '../actions/expenseActions';
+import { CREATE_NEW_EXPENSE_RESET } from '../constants/expenseConstants';
 import './screens-style.css';
 
 const HomeScreen = () => {
 	const dispatch = useDispatch();
+
+	const { addExpenseSection, setAddExpenseSection } =
+		useContext(AddExpenseContext);
+
+	const [category, setCategory] = useState('');
+	const [maxAmount, setMaxAmount] = useState('');
 
 	const { userInfo } = useSelector((state) => state.userLogin);
 
 	const { loading, expenses, error } = useSelector(
 		(state) => state.expenseMyList
 	);
+
+	const {
+		loading: loadingCreate,
+		success: successCreate,
+		error: errorCreate,
+	} = useSelector((state) => state.createNewExpense);
+
 	useEffect(() => {
+		if (successCreate) {
+			dispatch({ type: CREATE_NEW_EXPENSE_RESET });
+		}
 		dispatch(listMyExpenses());
-	}, [dispatch]);
+	}, [dispatch, successCreate]);
+
+	const toggleAddExpense = () => setAddExpenseSection(!addExpenseSection);
+
+	const createExpenseHandler = (e) => {
+		e.preventDefault();
+		dispatch(createNewExpense({ category, maxAmount }));
+		setAddExpenseSection(false);
+	};
 
 	return (
 		<div className="main-container">
 			<div className="home-screen">
-				{expenses && expenses.length === 0 ? (
+				{addExpenseSection ? (
+					<FormContainer handler={createExpenseHandler}>
+						{errorCreate && <Message type="error">{errorCreate}</Message>}
+						<label htmlFor="category" className="form-label">
+							Category:
+						</label>
+						<input
+							required
+							type="text"
+							id="category"
+							className="form-input"
+							value={category}
+							onChange={(e) => setCategory(e.target.value)}
+							placeholder="Enter Category Name"
+						/>
+
+						<span className="spacer"></span>
+
+						<label htmlFor="maxAmount" className="form-label">
+							Max Amount:
+						</label>
+						<input
+							required
+							type="number"
+							id="maxAmount"
+							className="form-input"
+							value={maxAmount}
+							onChange={(e) => setMaxAmount(e.target.value)}
+							placeholder="Enter Max Amount"
+						/>
+
+						<span className="spacer"></span>
+						<span className="spacer"></span>
+
+						<button
+							type="submit"
+							className="primary-button expense-create-button"
+						>
+							{loadingCreate ? (
+								<Loader border="3px" size="30px" color="green" />
+							) : (
+								<>
+									<IoAddCircleSharp className="margin-right" />
+									Create Expense
+								</>
+							)}
+						</button>
+					</FormContainer>
+				) : expenses && expenses.length === 0 ? (
 					<div className="welcome-homescreen-message">
 						<h2 className="screen-title welcome-title">
-							Hello {userInfo.firstName}, <span>Click here</span> or on the Add
+							Hello {userInfo.firstName},{' '}
+							<span onClick={toggleAddExpense}>Click here</span> or on the Add
 							Expense button to add your first expense.
 						</h2>
 					</div>
@@ -79,6 +156,9 @@ const HomeScreen = () => {
 						)}
 					</>
 				)}
+				<div onClick={toggleAddExpense} className="sticky-add-expense">
+					<IoAddSharp />
+				</div>
 			</div>
 		</div>
 	);
