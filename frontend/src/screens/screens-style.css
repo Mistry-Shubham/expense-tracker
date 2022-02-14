@@ -239,9 +239,41 @@
 	gap: 40px;
 }
 
+/* h2 Add Expense to List Form */
+.expense-screen .add-expense-list {
+	margin-bottom: 30px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.expense-screen .add-expense-list label {
+	font-size: large;
+	margin-right: 10px;
+}
+
+.expense-screen .add-expense-list input {
+	outline: none;
+	padding: 4px;
+	border-radius: 50vh;
+	width: 22vw;
+	color: black;
+	font-size: large;
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.expense-screen .add-expense-list button {
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	font-size: large;
+	width: 150px;
+}
+
 /* h2 Table */
 .expense-screen .expense-list-table {
 	display: flex;
+	flex-direction: column;
 	width: 100%;
 	overflow-x: hidden;
 	border-radius: 20px;
@@ -365,6 +397,21 @@
 	.expense-screen .expense-screen-grid {
 		display: flex;
 		flex-direction: column-reverse;
+	}
+
+	.expense-screen .add-expense-list {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.expense-screen .add-expense-list div {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 10px;
+	}
+
+	.expense-screen .add-expense-list input {
+		width: 95vw;
 	}
 
 	.expense-screen .expense-list-table {

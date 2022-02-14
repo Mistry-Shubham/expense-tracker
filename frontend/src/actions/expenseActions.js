@@ -9,6 +9,9 @@ import {
 	EXPENSE_BY_ID_REQUEST,
 	EXPENSE_BY_ID_SUCCESS,
 	EXPENSE_BY_ID_FAIL,
+	ADD_EXPENSE_TO_LIST_REQUEST,
+	ADD_EXPENSE_TO_LIST_SUCCESS,
+	ADD_EXPENSE_TO_LIST_FAIL,
 } from '../constants/expenseConstants';
 
 export const listMyExpenses = () => async (dispatch, getState) => {
@@ -95,3 +98,34 @@ export const getExpenseById = (id) => async (dispatch, getState) => {
 		});
 	}
 };
+
+export const addExpenseToList =
+	({ id, expense }) =>
+	async (dispatch, getState) => {
+		try {
+			dispatch({ type: ADD_EXPENSE_TO_LIST_REQUEST });
+
+			const {
+				userLogin: { userInfo },
+			} = getState();
+
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${userInfo.token}`,
+				},
+			};
+
+			const { data } = await axios.put(`/api/expenses/${id}`, expense, config);
+
+			dispatch({ type: ADD_EXPENSE_TO_LIST_SUCCESS });
+		} catch (err) {
+			dispatch({
+				type: ADD_EXPENSE_TO_LIST_FAIL,
+				payload:
+					err.response && err.response.data.message
+						? err.response.data.message
+						: err.message,
+			});
+		}
+	};

@@ -11,6 +11,7 @@ import {
 	expenseMyListReducer,
 	expenseCreateNewReducer,
 	expenseGetByIdReducer,
+	expenseAddToListReducer,
 } from './reducers/expenseReducers';
 
 const reducer = combineReducers({
@@ -21,6 +22,7 @@ const reducer = combineReducers({
 	expenseMyList: expenseMyListReducer,
 	expenseCreateNew: expenseCreateNewReducer,
 	expenseGetById: expenseGetByIdReducer,
+	expenseAddToList: expenseAddToListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
