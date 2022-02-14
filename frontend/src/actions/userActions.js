@@ -16,6 +16,7 @@ import {
 	USER_REGISTER_SUCCESS,
 	USER_REGISTER_FAIL,
 } from '../constants/userConstants';
+import { EXPENSE_BY_ID_RESET } from '../constants/expenseConstants';
 
 export const login = (email, password) => async (dispatch) => {
 	try {
@@ -51,6 +52,7 @@ export const logout = () => async (dispatch) => {
 	dispatch({ type: USER_LOGOUT });
 	dispatch({ type: USER_PROFILE_RESET });
 	dispatch({ type: USER_PROFILE_UPDATE_RESET });
+	dispatch({ type: EXPENSE_BY_ID_RESET });
 	localStorage.removeItem('userInfo');
 };
 

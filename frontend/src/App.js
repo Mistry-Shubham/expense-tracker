@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ExpenseScreen from './screens/ExpenseScreen';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -25,6 +26,7 @@ const App = () => {
 							<Route path="/login" element={<LoginScreen />} />
 							<Route path="/profile" element={<ProfileScreen />} />
 							<Route path="/register" element={<RegisterScreen />} />
+							<Route path="/expense/:id" element={<ExpenseScreen />} />
 						</Routes>
 					</main>
 					<Footer />

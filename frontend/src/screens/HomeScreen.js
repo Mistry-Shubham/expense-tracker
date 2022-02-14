@@ -29,7 +29,7 @@ const HomeScreen = () => {
 		loading: loadingCreate,
 		success: successCreate,
 		error: errorCreate,
-	} = useSelector((state) => state.createNewExpense);
+	} = useSelector((state) => state.expenseCreateNew);
 
 	useEffect(() => {
 		if (successCreate) {

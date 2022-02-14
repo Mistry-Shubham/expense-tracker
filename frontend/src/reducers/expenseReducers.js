@@ -6,6 +6,10 @@ import {
 	CREATE_NEW_EXPENSE_SUCCESS,
 	CREATE_NEW_EXPENSE_FAIL,
 	CREATE_NEW_EXPENSE_RESET,
+	EXPENSE_BY_ID_REQUEST,
+	EXPENSE_BY_ID_SUCCESS,
+	EXPENSE_BY_ID_FAIL,
+	EXPENSE_BY_ID_RESET,
 } from '../constants/expenseConstants';
 
 export const expenseMyListReducer = (state = { expenses: [] }, action) => {
@@ -21,7 +25,7 @@ export const expenseMyListReducer = (state = { expenses: [] }, action) => {
 	}
 };
 
-export const createNewExpenseReducer = (state = { expense: {} }, action) => {
+export const expenseCreateNewReducer = (state = { expense: {} }, action) => {
 	switch (action.type) {
 		case CREATE_NEW_EXPENSE_REQUEST:
 			return { ...state, loading: true };
@@ -30,6 +34,21 @@ export const createNewExpenseReducer = (state = { expense: {} }, action) => {
 		case CREATE_NEW_EXPENSE_FAIL:
 			return { loading: false, error: action.payload };
 		case CREATE_NEW_EXPENSE_RESET:
+			return { expense: {} };
+		default:
+			return state;
+	}
+};
+
+export const expenseGetByIdReducer = (state = { expense: {} }, action) => {
+	switch (action.type) {
+		case EXPENSE_BY_ID_REQUEST:
+			return { ...state, loading: true };
+		case EXPENSE_BY_ID_SUCCESS:
+			return { loading: false, expense: action.payload };
+		case EXPENSE_BY_ID_FAIL:
+			return { loading: false, error: action.payload };
+		case EXPENSE_BY_ID_RESET:
 			return { expense: {} };
 		default:
 			return state;

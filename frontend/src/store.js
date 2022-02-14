@@ -9,7 +9,8 @@ import {
 } from './reducers/userReducers';
 import {
 	expenseMyListReducer,
-	createNewExpenseReducer,
+	expenseCreateNewReducer,
+	expenseGetByIdReducer,
 } from './reducers/expenseReducers';
 
 const reducer = combineReducers({
@@ -18,7 +19,8 @@ const reducer = combineReducers({
 	userUpdateProfile: userUpdateProfileReducer,
 	userRegister: userRegisterReducer,
 	expenseMyList: expenseMyListReducer,
-	createNewExpense: createNewExpenseReducer,
+	expenseCreateNew: expenseCreateNewReducer,
+	expenseGetById: expenseGetByIdReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
