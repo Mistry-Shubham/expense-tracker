@@ -123,6 +123,7 @@ const RegisterScreen = () => {
 						value={password}
 						setValue={setPassword}
 						placeholder="Enter your Password"
+						passCheck
 					/>
 
 					<span className="spacer"></span>

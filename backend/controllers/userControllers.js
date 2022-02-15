@@ -53,6 +53,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 			email: user.email,
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
+			token: generateToken(user._id),
 		});
 	} else {
 		res.status(400);

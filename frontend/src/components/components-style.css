@@ -137,6 +137,45 @@
 	fill: rgba(0, 0, 0, 0.8);
 }
 
+/* h2 Password Validator */
+.form-container .pass-check-container {
+	padding: 5px;
+	margin-left: 20px;
+}
+
+.form-container .pass-check-container .pass-check-invalid {
+	margin-bottom: 5px;
+	font-size: 12px;
+	color: red;
+}
+
+.form-container .pass-check-container .pass-check-valid {
+	margin-bottom: 5px;
+	font-size: 12px;
+	color: green;
+}
+
+/* h2 Password Strength Meter */
+.form-container .pass-strength-meter {
+	display: flex;
+	justify-content: space-evenly;
+	height: 5px;
+	width: 100%;
+	margin-block: 10px;
+}
+
+.form-container .pass-strength-invalid {
+	height: 5px;
+	width: 22%;
+	background-color: gray;
+}
+
+.form-container .pass-strength-valid {
+	height: 5px;
+	width: 22%;
+	background-color: green;
+}
+
 /* h2 Button */
 .form-container .form-submit-button {
 	display: flex;

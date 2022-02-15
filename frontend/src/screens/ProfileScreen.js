@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoPencilSharp, IoSettingsSharp, IoCloseSharp } from 'react-icons/io5';
 import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { getUserProfile, updateUserProfile } from '../actions/userActions';
-import {
-	USER_PROFILE_RESET,
-	USER_PROFILE_UPDATE_RESET,
-} from '../constants/userConstants';
+import { USER_PROFILE_UPDATE_RESET } from '../constants/userConstants';
 import './screens-style.css';
 
 const ProfileScreen = () => {
@@ -179,6 +176,7 @@ const ProfileScreen = () => {
 								value={password}
 								setValue={setPassword}
 								placeholder="Enter your Password"
+								passCheck
 							/>
 
 							<span className="spacer"></span>
