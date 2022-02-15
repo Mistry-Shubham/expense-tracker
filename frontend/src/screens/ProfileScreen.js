@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoPencilSharp, IoSettingsSharp, IoCloseSharp } from 'react-icons/io5';
-import FormContainer from '../components/FormContainer';
+import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { getUserProfile, updateUserProfile } from '../actions/userActions';
@@ -174,12 +174,10 @@ const ProfileScreen = () => {
 							<label htmlFor="password" className="form-label">
 								Password:
 							</label>
-							<input
-								type="password"
+							<PasswordInput
 								id="password"
-								className="form-input"
 								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								setValue={setPassword}
 								placeholder="Enter your Password"
 							/>
 
@@ -188,14 +186,15 @@ const ProfileScreen = () => {
 							<label htmlFor="confirmPassword" className="form-label">
 								Confirm Password:
 							</label>
-							<input
-								type="password"
+							<PasswordInput
 								id="confirmPassword"
-								className="form-input"
 								value={confirmPassword}
-								onChange={(e) => setConfirmPassword(e.target.value)}
+								setValue={setConfirmPassword}
 								placeholder="Enter your Password again"
 							/>
+							{confirmPassword.length > 0 && password !== confirmPassword ? (
+								<div style={{ color: 'red' }}>Passwords do not match</div>
+							) : null}
 
 							<span className="spacer"></span>
 							<span className="spacer"></span>
@@ -204,6 +203,7 @@ const ProfileScreen = () => {
 								<button
 									type="submit"
 									className="primary-button update-profile-button"
+									disabled={loadingUpdate || password !== confirmPassword}
 								>
 									{loadingUpdate ? (
 										<Loader border="3px" size="30px" color="green" />

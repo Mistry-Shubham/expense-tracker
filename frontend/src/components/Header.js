@@ -50,15 +50,19 @@ const Header = () => {
 					<h1 className="title">Expense Tracker</h1>
 				</Link>
 				<div className="navs" id={show ? 'hidden' : ''}>
-					<Link to="/" className="remove-link-underline">
-						<button
-							onClick={toggleAddExpense}
-							className="add-expense-button primary-button"
-						>
-							<IoAddSharp className="margin-right" />
-							Add Expense
-						</button>
-					</Link>
+					{userInfo && (
+						<Link to="/" className="remove-link-underline">
+							<button
+								onClick={toggleAddExpense}
+								disabled={!userInfo}
+								className="add-expense-button primary-button"
+							>
+								<IoAddSharp className="margin-right" />
+								Add Expense
+							</button>
+						</Link>
+					)}
+
 					{userInfo ? (
 						<div className="dropdown">
 							<button

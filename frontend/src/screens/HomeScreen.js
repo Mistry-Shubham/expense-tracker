@@ -1,6 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoAddSharp, IoAddCircleSharp } from 'react-icons/io5';
+import { FiExternalLink } from 'react-icons/fi';
 import { AddExpenseContext } from '../Contexts';
 import Expense from '../components/Expense';
 import FormContainer from '../components/FormContainer';
@@ -97,6 +99,22 @@ const HomeScreen = () => {
 							)}
 						</button>
 					</FormContainer>
+				) : !userInfo ? (
+					<div className="homescreen-get-started">
+						<h2 className="screen-title">
+							Hello User{' '}
+							<Link to="/login" className="remove-link-underline">
+								Login
+								<FiExternalLink />
+							</Link>{' '}
+							/{' '}
+							<Link to="/register" className="remove-link-underline">
+								Create new account
+								<FiExternalLink />
+							</Link>{' '}
+							to get started
+						</h2>
+					</div>
 				) : expenses && expenses.length === 0 ? (
 					<div className="welcome-homescreen-message">
 						<h2 className="screen-title welcome-title">

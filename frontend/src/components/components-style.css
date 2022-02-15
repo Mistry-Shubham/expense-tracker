@@ -101,6 +101,7 @@
 	background-color: rgba(255, 255, 255, 0.6);
 	margin-top: 10px;
 	font-size: 1.2rem;
+	width: 100%;
 	padding: 5px 20px;
 	border-radius: 50vh;
 	outline: none;
@@ -108,6 +109,32 @@
 
 .form-container .form-input:focus {
 	background-color: rgba(255, 255, 255, 1);
+}
+
+.form-container .form-password-container {
+	background-color: rgba(255, 255, 255, 0.6);
+	margin-top: 10px;
+	position: relative;
+	width: 100%;
+	border-radius: 50vh;
+}
+
+.form-container .form-password-input {
+	color: rgb(0, 0, 0);
+	background-color: transparent;
+	font-size: 1.2rem;
+	width: 100%;
+	padding: 5px 20px;
+	border-radius: 50vh;
+	outline: none;
+}
+
+.form-container .form-password-icon {
+	position: absolute;
+	top: 18%;
+	right: 4%;
+	font-size: x-large;
+	fill: rgba(0, 0, 0, 0.8);
 }
 
 /* h2 Button */

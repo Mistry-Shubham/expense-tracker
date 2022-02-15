@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoLogInSharp } from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
+import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import FormContainer from '../components/FormContainer';
 import { login } from '../actions/userActions';
 import './screens-style.css';
 
@@ -53,18 +53,19 @@ const LoginScreen = () => {
 					<label htmlFor="password" className="form-label">
 						Password
 					</label>
-					<input
-						type="password"
+					<PasswordInput
 						id="password"
-						className="form-input"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						setValue={setPassword}
 						placeholder="Enter your Password"
 					/>
 
 					<span className="spacer"></span>
 
-					<button className="primary-button form-submit-button">
+					<button
+						className="primary-button form-submit-button"
+						disabled={loading}
+					>
 						{loading ? (
 							<Loader border="3px" size="30px" color="green" />
 						) : (

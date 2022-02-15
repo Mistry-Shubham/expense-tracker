@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
-import FormContainer from '../components/FormContainer';
+import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { register } from '../actions/userActions';
@@ -118,13 +118,10 @@ const RegisterScreen = () => {
 					<label htmlFor="password" className="form-label">
 						Password:
 					</label>
-					<input
-						required
-						type="password"
+					<PasswordInput
 						id="password"
-						className="form-input"
 						value={password}
-						onChange={(e) => setPassword(e.target.value)}
+						setValue={setPassword}
 						placeholder="Enter your Password"
 					/>
 
@@ -133,15 +130,15 @@ const RegisterScreen = () => {
 					<label htmlFor="confirmPassword" className="form-label">
 						Confirm Password:
 					</label>
-					<input
-						required
-						type="password"
+					<PasswordInput
 						id="confirmPassword"
-						className="form-input"
 						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
+						setValue={setConfirmPassword}
 						placeholder="Enter your Password again"
 					/>
+					{confirmPassword.length > 0 && password !== confirmPassword ? (
+						<div style={{ color: 'red' }}>Passwords do not match</div>
+					) : null}
 
 					<span className="spacer"></span>
 					<span className="spacer"></span>
@@ -149,6 +146,7 @@ const RegisterScreen = () => {
 					<button
 						type="submit"
 						className="primary-button register-submit-button"
+						disabled={loading || password !== confirmPassword}
 					>
 						{loading ? (
 							<Loader border="3px" size="30px" color="green" />
