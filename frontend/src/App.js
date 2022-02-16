@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { AddExpenseContext } from './Contexts';
+import { defaultAppContext } from './Contexts';
 import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -15,7 +15,7 @@ const App = () => {
 	const [addExpenseSection, setAddExpenseSection] = useState(false);
 
 	return (
-		<AddExpenseContext.Provider
+		<defaultAppContext.Provider
 			value={{ addExpenseSection, setAddExpenseSection }}
 		>
 			<div className="background-image">
@@ -34,7 +34,7 @@ const App = () => {
 					<Footer />
 				</div>
 			</div>
-		</AddExpenseContext.Provider>
+		</defaultAppContext.Provider>
 	);
 };
 

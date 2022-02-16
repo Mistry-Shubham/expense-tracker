@@ -11,7 +11,7 @@ import {
 	IoLogOutSharp,
 	IoIdCardSharp,
 } from 'react-icons/io5';
-import { AddExpenseContext } from '../Contexts';
+import { defaultAppContext } from '../Contexts';
 import { logout } from '../actions/userActions';
 import './components-style.css';
 
@@ -19,7 +19,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 
 	const { addExpenseSection, setAddExpenseSection } =
-		useContext(AddExpenseContext);
+		useContext(defaultAppContext);
 
 	const [show, setShow] = useState(false);
 	const [dropdown, setDropdown] = useState(true);

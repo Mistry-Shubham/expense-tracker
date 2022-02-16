@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoAddSharp, IoAddCircleSharp } from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
-import { AddExpenseContext } from '../Contexts';
+import { defaultAppContext } from '../Contexts';
 import Expense from '../components/Expense';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
@@ -17,7 +17,7 @@ const HomeScreen = () => {
 	const navigate = useNavigate();
 
 	const { addExpenseSection, setAddExpenseSection } =
-		useContext(AddExpenseContext);
+		useContext(defaultAppContext);
 
 	const [category, setCategory] = useState('');
 	const [maxAmount, setMaxAmount] = useState('');

@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const AddExpenseContext = createContext(false);
+export const defaultAppContext = createContext(false);
