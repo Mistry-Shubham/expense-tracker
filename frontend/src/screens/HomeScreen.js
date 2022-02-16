@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoAddSharp, IoAddCircleSharp } from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
@@ -14,6 +14,7 @@ import './screens-style.css';
 
 const HomeScreen = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const { addExpenseSection, setAddExpenseSection } =
 		useContext(AddExpenseContext);
@@ -30,11 +31,13 @@ const HomeScreen = () => {
 	const {
 		loading: loadingCreate,
 		success: successCreate,
+		expense: expenseCreate,
 		error: errorCreate,
 	} = useSelector((state) => state.expenseCreateNew);
 
 	useEffect(() => {
 		if (successCreate) {
+			navigate(`/expense/${expenseCreate._id}`);
 			dispatch({ type: CREATE_NEW_EXPENSE_RESET });
 		}
 		dispatch(listMyExpenses());

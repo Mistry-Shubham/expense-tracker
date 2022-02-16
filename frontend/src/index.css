@@ -47,6 +47,17 @@ body {
 	cursor: pointer;
 }
 
+.primary-delete {
+	background-color: #b30000;
+	border: none;
+	border-radius: 10px;
+}
+
+.primary-delete:hover {
+	background-color: #ff0000;
+	cursor: pointer;
+}
+
 .margin-right {
 	margin-right: 10px;
 }
