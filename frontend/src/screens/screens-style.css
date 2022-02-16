@@ -310,13 +310,15 @@
 	border-radius: 20px;
 }
 
-.expense-screen .expense-list-table table {
+.expense-screen .expense-list-table table,
+.expense-edit-screen .expense-edit-table table {
 	width: 100%;
 	height: fit-content;
 }
 
 /* h2 Table Head */
-.expense-screen .expense-table-head {
+.expense-screen .expense-table-head,
+.expense-edit-screen .expense-table-head {
 	padding-block: 15px;
 	font-size: larger;
 	font-weight: bolder;
@@ -324,34 +326,41 @@
 }
 
 /* h2 Table Data */
-.expense-screen .expense-table-data {
+.expense-screen .expense-table-data,
+.expense-edit-screen .expense-table-data {
 	padding-block: 10px;
 	text-align: center;
 	align-items: center;
 	font-size: large;
 }
 
-.expense-screen .expense-list-table table {
+.expense-screen .expense-list-table table,
+.expense-edit-screen .expense-edit-table table {
 	border-collapse: collapse;
 }
 
-.expense-screen .expense-list-table thead {
+.expense-screen .expense-list-table thead,
+.expense-edit-screen .expense-edit-table thead {
 	background-color: rgba(0, 0, 0, 0.7);
 }
 
-.expense-screen .expense-list-table tbody tr:nth-child(even) {
+.expense-screen .expense-list-table tbody tr:nth-child(even),
+.expense-edit-screen .expense-edit-table tbody tr:nth-child(even) {
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
-.expense-screen .expense-list-table tbody tr:nth-child(even) td {
+.expense-screen .expense-list-table tbody tr:nth-child(even) td,
+.expense-edit-screen .expense-edit-table tbody tr:nth-child(even) td {
 	color: rgba(255, 255, 255, 0.8);
 }
 
-.expense-screen .expense-list-table tbody tr:nth-child(odd) {
+.expense-screen .expense-list-table tbody tr:nth-child(odd),
+.expense-edit-screen .expense-edit-table tbody tr:nth-child(odd) {
 	background-color: rgba(255, 255, 255, 0.6);
 }
 
-.expense-screen .expense-list-table tbody tr:nth-child(odd) td {
+.expense-screen .expense-list-table tbody tr:nth-child(odd) td,
+.expense-edit-screen .expense-edit-table tbody tr:nth-child(odd) td {
 	color: rgba(0, 0, 0, 0.9);
 }
 
@@ -381,6 +390,64 @@
 	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	font-size: large;
 	margin-block: 30px;
+}
+
+/* h1 Expense Edit Screen */
+.expense-edit-screen {
+	max-width: 100vw;
+}
+
+/* h2 Expense Edit Grid */
+.expense-edit-screen .expense-edit-grid {
+	display: grid;
+	grid-template-columns: 3.5fr 1.5fr;
+	gap: 40px;
+}
+
+.expense-edit-screen .expense-edit-table {
+	width: 100%;
+	overflow-x: hidden;
+	border-radius: 20px;
+}
+
+/* $ For Expense Edit Table view table of Expense Screen */
+
+/* h2 Edit List Input */
+.expense-edit-screen .edit-list-input {
+	outline: none;
+	border-radius: 50vh;
+	width: 150px;
+	background-color: transparent;
+	padding: 5px 10px;
+	font-size: medium;
+	border: 1px solid rgba(0, 0, 0, 0.7);
+	color: black;
+	text-align: center;
+}
+
+.expense-edit-screen .edit-list-input:focus {
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* h2 Expense Edit Button */
+.expense-edit-screen .expense-edit-button-container {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.expense-edit-screen .expense-edit-button {
+	padding: 8px;
+	width: 100px;
+	font-size: medium;
+	margin-right: 20px;
+	align-items: baseline;
+}
+
+/* h2 Expense Update Button */
+.expense-edit-screen .expense-update-button {
+	padding: 8px;
+	font-size: large;
+	width: 40%;
 }
 
 @media only screen and (max-width: 700px) {
@@ -457,7 +524,8 @@
 		margin-right: 10px;
 	}
 
-	.expense-screen .expense-screen-grid {
+	.expense-screen .expense-screen-grid,
+	.expense-edit-screen .expense-edit-grid {
 		display: flex;
 		flex-direction: column-reverse;
 	}
@@ -477,12 +545,14 @@
 		width: 95vw;
 	}
 
-	.expense-screen .expense-list-table {
+	.expense-screen .expense-list-table,
+	.expense-edit-screen .expense-edit-table {
 		width: 100%;
 		overflow-x: scroll;
 	}
 
-	.expense-screen .expense-list-table .expense-table-head {
+	.expense-screen .expense-list-table .expense-table-head,
+	.expense-edit-screen .expense-edit-table .expense-table-head {
 		padding: 15px 70px;
 	}
 }

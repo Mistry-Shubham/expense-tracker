@@ -14,6 +14,8 @@ import {
 	expenseAddToListReducer,
 	expenseDeleteItemReducer,
 	expenseDeleteReducer,
+	expenseEditListItemReducer,
+	expenseEditReducer,
 } from './reducers/expenseReducers';
 
 const reducer = combineReducers({
@@ -27,6 +29,8 @@ const reducer = combineReducers({
 	expenseAddToList: expenseAddToListReducer,
 	expenseDeleteItem: expenseDeleteItemReducer,
 	expenseDelete: expenseDeleteReducer,
+	expenseEditListItem: expenseEditListItemReducer,
+	expenseEdit: expenseEditReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

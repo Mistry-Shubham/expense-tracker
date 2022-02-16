@@ -259,7 +259,8 @@ const ExpenseScreen = () => {
 							<div className="expense-stats-container">
 								<div className="expense-stats">
 									<h3>Name:</h3>
-									{userInfo.firstName} {userInfo.lastName}
+									{expense.user && expense.user.firstName}{' '}
+									{expense.user && expense.user.lastName}
 								</div>
 								<div className="expense-stats">
 									<h3>Total:</h3> ₹{expense.maxAmount}

@@ -22,6 +22,14 @@ import {
 	DELETE_EXPENSE_SUCCESS,
 	DELETE_EXPENSE_FAIL,
 	DELETE_EXPENSE_RESET,
+	EDIT_LIST_ITEM_REQUEST,
+	EDIT_LIST_ITEM_SUCCESS,
+	EDIT_LIST_ITEM_FAIL,
+	EDIT_LIST_ITEM_RESET,
+	EDIT_EXPENSE_REQUEST,
+	EDIT_EXPENSE_SUCCESS,
+	EDIT_EXPENSE_FAIL,
+	EDIT_EXPENSE_RESET,
 } from '../constants/expenseConstants';
 
 export const expenseMyListReducer = (state = { expenses: [] }, action) => {
@@ -106,6 +114,36 @@ export const expenseDeleteReducer = (state = {}, action) => {
 		case DELETE_EXPENSE_FAIL:
 			return { loading: false, error: action.payload };
 		case DELETE_EXPENSE_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
+
+export const expenseEditListItemReducer = (state = {}, action) => {
+	switch (action.type) {
+		case EDIT_LIST_ITEM_REQUEST:
+			return { ...state, loading: true };
+		case EDIT_LIST_ITEM_SUCCESS:
+			return { loading: false, expense: action.payload, success: true };
+		case EDIT_LIST_ITEM_FAIL:
+			return { loading: false, error: action.payload };
+		case EDIT_LIST_ITEM_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
+
+export const expenseEditReducer = (state = {}, action) => {
+	switch (action.type) {
+		case EDIT_EXPENSE_REQUEST:
+			return { ...state, loading: true };
+		case EDIT_EXPENSE_SUCCESS:
+			return { loading: false, expense: action.payload, success: true };
+		case EDIT_EXPENSE_FAIL:
+			return { loading: false, error: action.payload };
+		case EDIT_EXPENSE_RESET:
 			return {};
 		default:
 			return state;

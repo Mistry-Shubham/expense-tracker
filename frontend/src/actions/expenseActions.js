@@ -18,6 +18,12 @@ import {
 	DELETE_EXPENSE_REQUEST,
 	DELETE_EXPENSE_SUCCESS,
 	DELETE_EXPENSE_FAIL,
+	EDIT_LIST_ITEM_REQUEST,
+	EDIT_LIST_ITEM_SUCCESS,
+	EDIT_LIST_ITEM_FAIL,
+	EDIT_EXPENSE_REQUEST,
+	EDIT_EXPENSE_SUCCESS,
+	EDIT_EXPENSE_FAIL,
 } from '../constants/expenseConstants';
 
 export const listMyExpenses = () => async (dispatch, getState) => {
@@ -196,3 +202,73 @@ export const deleteExpense = (id) => async (dispatch, getState) => {
 		});
 	}
 };
+
+export const editExpenseListItem =
+	({ idData, newData }) =>
+	async (dispatch, getState) => {
+		try {
+			dispatch({ type: EDIT_LIST_ITEM_REQUEST });
+
+			const {
+				userLogin: { userInfo },
+			} = getState();
+
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${userInfo.token}`,
+				},
+			};
+
+			const { data } = await axios.put(
+				`/api/expenses/${idData.id}/${idData.listid}`,
+				newData,
+				config
+			);
+
+			dispatch({ type: EDIT_LIST_ITEM_SUCCESS, payload: data });
+		} catch (err) {
+			dispatch({
+				type: EDIT_LIST_ITEM_FAIL,
+				payload:
+					err.response && err.response.data.message
+						? err.response.data.message
+						: err.message,
+			});
+		}
+	};
+
+export const editExpense =
+	({ id, newData }) =>
+	async (dispatch, getState) => {
+		try {
+			dispatch({ type: EDIT_EXPENSE_REQUEST });
+
+			const {
+				userLogin: { userInfo },
+			} = getState();
+
+			const config = {
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${userInfo.token}`,
+				},
+			};
+
+			const { data } = await axios.put(
+				`/api/expenses/${id}/edit`,
+				newData,
+				config
+			);
+
+			dispatch({ type: EDIT_EXPENSE_SUCCESS, payload: data });
+		} catch (err) {
+			dispatch({
+				type: EDIT_EXPENSE_FAIL,
+				payload:
+					err.response && err.response.data.message
+						? err.response.data.message
+						: err.message,
+			});
+		}
+	};

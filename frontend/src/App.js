@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ExpenseScreen from './screens/ExpenseScreen';
+import ExpenseEditScreen from './screens/ExpenseEditScreen';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -27,6 +28,7 @@ const App = () => {
 							<Route path="/profile" element={<ProfileScreen />} />
 							<Route path="/register" element={<RegisterScreen />} />
 							<Route path="/expense/:id" element={<ExpenseScreen />} />
+							<Route path="/expense/:id/edit" element={<ExpenseEditScreen />} />
 						</Routes>
 					</main>
 					<Footer />
