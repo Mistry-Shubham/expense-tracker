@@ -142,6 +142,11 @@ const ExpenseScreen = () => {
 										Name cannot contain any space
 									</div>
 								) : null}
+								{name.match(/^\d/) ? (
+									<div style={{ color: 'red' }}>
+										Name cannot start with number
+									</div>
+								) : null}
 								<form onSubmit={formSubmitHandler}>
 									{errorAdd && <Message type="error">{errorAdd}</Message>}
 									<div className="add-expense-list">
@@ -168,7 +173,9 @@ const ExpenseScreen = () => {
 										<button
 											type="submit"
 											className="primary-button"
-											disabled={loadingAdd || name.includes(' ')}
+											disabled={
+												loadingAdd || name.includes(' ') || name.match(/^\d/)
+											}
 										>
 											{loadingAdd ? (
 												<Loader border="3px" size="30px" color="green" />

@@ -47,7 +47,12 @@ const HomeScreen = () => {
 
 	const createExpenseHandler = (e) => {
 		e.preventDefault();
-		dispatch(createNewExpense({ category, maxAmount }));
+		dispatch(
+			createNewExpense({
+				category: category && category[0].toUpperCase() + category.substring(1),
+				maxAmount,
+			})
+		);
 		setAddExpenseSection(false);
 	};
 
@@ -69,6 +74,16 @@ const HomeScreen = () => {
 							onChange={(e) => setCategory(e.target.value)}
 							placeholder="Enter Category Name"
 						/>
+						{category.includes(' ') ? (
+							<div style={{ color: 'red' }}>
+								Category cannot contain any space
+							</div>
+						) : null}
+						{category.match(/^\d/) ? (
+							<div style={{ color: 'red' }}>
+								Category cannot start with number
+							</div>
+						) : null}
 
 						<span className="spacer"></span>
 
@@ -91,6 +106,9 @@ const HomeScreen = () => {
 						<button
 							type="submit"
 							className="primary-button expense-create-button"
+							disabled={
+								loadingCreate || category.includes(' ') || category.match(/^\d/)
+							}
 						>
 							{loadingCreate ? (
 								<Loader border="3px" size="30px" color="green" />

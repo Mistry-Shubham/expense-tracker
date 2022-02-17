@@ -77,14 +77,22 @@ const ProfileScreen = () => {
 			setPassMatchError(null);
 			dispatch(
 				updateUserProfile({
-					firstName,
-					lastName,
+					firstName:
+						firstName && firstName[0].toUpperCase() + firstName.substring(1),
+					lastName:
+						lastName && lastName[0].toUpperCase() + lastName.substring(1),
 					email,
 					dateOfBirth,
 					currency,
 					password,
 				})
 			);
+			setFirstName('');
+			setLastName('');
+			setEmail('');
+			setDateOfBirth('');
+			setPassword('');
+			setConfirmPassword('');
 		}
 	};
 
@@ -174,6 +182,16 @@ const ProfileScreen = () => {
 									/>
 								</div>
 							</div>
+							{firstName.includes(' ') || lastName.includes(' ') ? (
+								<div style={{ color: 'red', textAlign: 'center' }}>
+									First Name or Last Name cannot contain any space
+								</div>
+							) : null}
+							{firstName.match(/^\d/) || lastName.match(/^\d/) ? (
+								<div style={{ color: 'red' }}>
+									First Name or Last Name cannot start with number
+								</div>
+							) : null}
 
 							<span className="spacer"></span>
 
@@ -188,6 +206,16 @@ const ProfileScreen = () => {
 								onChange={(e) => setEmail(e.target.value)}
 								placeholder={user.email}
 							/>
+							{email.includes(' ') ? (
+								<div style={{ color: 'red' }}>
+									email cannot contain any space
+								</div>
+							) : null}
+							{email.match(/^\d/) ? (
+								<div style={{ color: 'red' }}>
+									Email cannot start with number
+								</div>
+							) : null}
 
 							<span className="spacer"></span>
 
@@ -245,6 +273,11 @@ const ProfileScreen = () => {
 								placeholder="Enter your New Password"
 								passCheck
 							/>
+							{password.includes(' ') ? (
+								<div style={{ color: 'red' }}>
+									Password cannot contain any space
+								</div>
+							) : null}
 
 							<span className="spacer"></span>
 
@@ -268,7 +301,17 @@ const ProfileScreen = () => {
 								<button
 									type="submit"
 									className="primary-button update-profile-button"
-									disabled={loadingUpdate || password !== confirmPassword}
+									disabled={
+										loadingUpdate ||
+										password !== confirmPassword ||
+										firstName.includes(' ') ||
+										firstName.match(/^\d/) ||
+										lastName.includes(' ') ||
+										lastName.match(/^\d/) ||
+										email.includes(' ') ||
+										email.match(/^\d/) ||
+										password.includes(' ')
+									}
 								>
 									{loadingUpdate ? (
 										<Loader border="3px" size="30px" color="green" />

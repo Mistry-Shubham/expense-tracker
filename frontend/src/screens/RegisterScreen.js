@@ -51,8 +51,10 @@ const RegisterScreen = () => {
 		} else {
 			dispatch(
 				register({
-					firstName,
-					lastName,
+					firstName:
+						firstName && firstName[0].toUpperCase() + firstName.substring(1),
+					lastName:
+						lastName && lastName[0].toUpperCase() + lastName.substring(1),
 					email,
 					dateOfBirth,
 					currency,
@@ -102,6 +104,16 @@ const RegisterScreen = () => {
 							/>
 						</div>
 					</div>
+					{firstName.includes(' ') || lastName.includes(' ') ? (
+						<div style={{ color: 'red', textAlign: 'center' }}>
+							First Name or Last Name cannot contain any space
+						</div>
+					) : null}
+					{firstName.match(/^\d/) || lastName.match(/^\d/) ? (
+						<div style={{ color: 'red' }}>
+							First Name or Last Name cannot start with number
+						</div>
+					) : null}
 
 					<span className="spacer"></span>
 
@@ -117,6 +129,12 @@ const RegisterScreen = () => {
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder="Enter your E-Mail"
 					/>
+					{email.includes(' ') ? (
+						<div style={{ color: 'red' }}>email cannot contain any space</div>
+					) : null}
+					{email.match(/^\d/) ? (
+						<div style={{ color: 'red' }}>Email cannot start with number</div>
+					) : null}
 
 					<span className="spacer"></span>
 
@@ -175,6 +193,11 @@ const RegisterScreen = () => {
 						placeholder="Enter your Password"
 						passCheck
 					/>
+					{password.includes(' ') ? (
+						<div style={{ color: 'red' }}>
+							Password cannot contain any space
+						</div>
+					) : null}
 
 					<span className="spacer"></span>
 
@@ -198,7 +221,15 @@ const RegisterScreen = () => {
 						type="submit"
 						className="primary-button register-submit-button"
 						disabled={
-							loading || !(password === confirmPassword && currency.name)
+							loading ||
+							!(password === confirmPassword && currency.name) ||
+							firstName.includes(' ') ||
+							firstName.match(/^\d/) ||
+							lastName.includes(' ') ||
+							lastName.match(/^\d/) ||
+							email.includes(' ') ||
+							email.match(/^\d/) ||
+							password.includes(' ')
 						}
 					>
 						{loading ? (

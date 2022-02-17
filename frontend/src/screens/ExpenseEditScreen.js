@@ -86,7 +86,10 @@ const ExpenseEditScreen = () => {
 		dispatch(
 			editExpenseListItem({
 				idData: { id: expenseId, listid: editListItem.editItem._id },
-				newData: { name, amount },
+				newData: {
+					name: name && name[0].toUpperCase() + name.substring(1),
+					amount,
+				},
 			})
 		);
 		setEditListItem({
@@ -97,7 +100,16 @@ const ExpenseEditScreen = () => {
 
 	const UpdateExpenseHandler = (e) => {
 		e.preventDefault();
-		dispatch(editExpense({ id: expenseId, newData: { category, maxAmount } }));
+		dispatch(
+			editExpense({
+				id: expenseId,
+				newData: {
+					category:
+						category && category[0].toUpperCase() + category.substring(1),
+					maxAmount,
+				},
+			})
+		);
 		setCategory('');
 		setMaxAmount('');
 	};
@@ -112,7 +124,16 @@ const ExpenseEditScreen = () => {
 				) : (
 					expense.user && (
 						<>
-							<h2 className="screen-title">{expense.category}</h2>
+							<div className="expense-title">
+								<h2 className="screen-title">{expense.category}</h2>
+								<button
+									type="button"
+									onClick={() => navigate(`/expense/${expenseId}`)}
+									className="primary-button title-button"
+								>
+									Go Back
+								</button>
+							</div>
 							<div className="expense-edit-grid">
 								<div className="expense-edit-table">
 									{errorList && <Message type="error">{errorList}</Message>}
@@ -162,7 +183,11 @@ const ExpenseEditScreen = () => {
 																type="button"
 																onClick={updateListHnadler}
 																className="primary-button expense-edit-button"
-																disabled={!(name || amount)}
+																disabled={
+																	!(name || amount) ||
+																	name.includes(' ') ||
+																	name.match(/^\d/)
+																}
 															>
 																{loadingList ? (
 																	<Loader
@@ -213,6 +238,16 @@ const ExpenseEditScreen = () => {
 											)}
 										</tbody>
 									</table>
+									{name.includes(' ') ? (
+										<div style={{ color: 'red' }}>
+											Name cannot contain any space
+										</div>
+									) : null}
+									{name.match(/^\d/) ? (
+										<div style={{ color: 'red' }}>
+											Name cannot start with number
+										</div>
+									) : null}
 								</div>
 								<FormContainer handler={UpdateExpenseHandler}>
 									{errorExpense && (
@@ -229,6 +264,16 @@ const ExpenseEditScreen = () => {
 										placeholder={expense.category}
 										className="form-input"
 									/>
+									{category.includes(' ') ? (
+										<div style={{ color: 'red' }}>
+											Category cannot contain any space
+										</div>
+									) : null}
+									{category.match(/^\d/) ? (
+										<div style={{ color: 'red' }}>
+											Category cannot start with number
+										</div>
+									) : null}
 
 									<span className="spacer"></span>
 
@@ -250,7 +295,11 @@ const ExpenseEditScreen = () => {
 									<button
 										type="submit"
 										className="primary-button expense-update-button"
-										disabled={!(category || maxAmount)}
+										disabled={
+											!(category || maxAmount) ||
+											category.includes(' ') ||
+											category.match(/^\d/)
+										}
 									>
 										{loadingExpense ? (
 											<Loader border="3px" size="30px" color="green" />

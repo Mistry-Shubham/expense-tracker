@@ -242,7 +242,8 @@
 	max-width: 100vw;
 }
 
-.expense-screen .expense-title {
+.expense-screen .expense-title,
+.expense-edit-screen .expense-title {
 	display: flex;
 	justify-content: space-between;
 }
@@ -252,7 +253,8 @@
 	display: flex;
 }
 
-.expense-screen .expense-title .title-button {
+.expense-screen .expense-title .title-button,
+.expense-edit-screen .expense-title .title-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
