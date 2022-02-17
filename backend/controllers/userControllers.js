@@ -6,7 +6,8 @@ import generateToken from '../utils/generateToken.js';
 //route     POST/api/users
 //access    public
 export const registerUser = asyncHandler(async (req, res) => {
-	const { firstName, lastName, email, password, dateOfBirth } = req.body;
+	const { firstName, lastName, email, password, dateOfBirth, currency } =
+		req.body;
 
 	const userExists = await User.findOne({ email });
 
@@ -43,6 +44,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 		password,
 		dateOfBirth,
 		age: calculatedAge,
+		defaultCurrency: currency,
 	});
 
 	if (user) {
@@ -53,6 +55,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 			email: user.email,
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
+			defaultCurrency: user.defaultCurrency,
 			token: generateToken(user._id),
 		});
 	} else {
@@ -77,6 +80,7 @@ export const authUser = asyncHandler(async (req, res) => {
 			email: user.email,
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
+			defaultCurrency: user.defaultCurrency,
 			token: generateToken(user._id),
 		});
 	} else {
@@ -123,6 +127,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 			email: user.email,
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
+			defaultCurrency: user.defaultCurrency,
 		});
 	} else {
 		res.status(404);
@@ -134,7 +139,8 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 //route     PUT/api/users/profile
 //access    private
 export const updateUserProfile = asyncHandler(async (req, res) => {
-	const { firstName, lastName, email, password, dateOfBirth } = req.body;
+	const { firstName, lastName, email, password, currency, dateOfBirth } =
+		req.body;
 
 	const user = await User.findById(req.user._id);
 
@@ -160,9 +166,18 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 	}
 
 	if (user) {
-		user.firstName = firstName;
-		user.lastName = lastName;
-		user.email = email;
+		if (firstName) {
+			user.firstName = firstName;
+		}
+		if (lastName) {
+			user.lastName = lastName;
+		}
+		if (email) {
+			user.email = email;
+		}
+		if (currency) {
+			user.defaultCurrency = currency;
+		}
 		if (dateOfBirth) {
 			user.dateOfBirth = dateOfBirth;
 			user.age = calculatedAge;
@@ -179,6 +194,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 			email: updatedUser.email,
 			dateOfBirth: updatedUser.dateOfBirth,
 			age: updatedUser.age,
+			defaultCurrency: updatedUser.defaultCurrency,
 			token: generateToken(updatedUser._id),
 		});
 	} else {

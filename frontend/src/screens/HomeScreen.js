@@ -16,7 +16,7 @@ const HomeScreen = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const { addExpenseSection, setAddExpenseSection } =
+	const { addExpenseSection, setAddExpenseSection, defaultCurrency } =
 		useContext(defaultAppContext);
 
 	const [category, setCategory] = useState('');
@@ -139,7 +139,7 @@ const HomeScreen = () => {
 									<div className="total-amount-alloted info-bar-containers">
 										<h4 className="info-bar-title">Total Expense</h4>
 										<p className="info-bar-content">
-											₹
+											{defaultCurrency && defaultCurrency.symbol}
 											{expenses.reduce(
 												(acc, currVal) => acc + currVal.maxAmount,
 												0
@@ -149,7 +149,7 @@ const HomeScreen = () => {
 									<div className="total-amount-remaining info-bar-containers">
 										<h4 className="info-bar-title">Total Remaining</h4>
 										<p className="info-bar-content">
-											₹
+											{defaultCurrency && defaultCurrency.symbol}
 											{expenses.reduce(
 												(acc, currVal) =>
 													acc + (currVal.maxAmount - currVal.totalSpent),
@@ -160,7 +160,7 @@ const HomeScreen = () => {
 									<div className="total-amount-spent info-bar-containers">
 										<h4 className="info-bar-title">Total Spent</h4>
 										<p className="info-bar-content">
-											₹
+											{defaultCurrency && defaultCurrency.symbol}
 											{expenses.reduce(
 												(acc, currVal) => acc + currVal.totalSpent,
 												0
@@ -177,9 +177,11 @@ const HomeScreen = () => {
 						)}
 					</>
 				)}
-				<div onClick={toggleAddExpense} className="sticky-add-expense">
-					<IoAddSharp />
-				</div>
+				{userInfo && (
+					<div onClick={toggleAddExpense} className="sticky-add-expense">
+						<IoAddSharp />
+					</div>
+				)}
 			</div>
 		</div>
 	);

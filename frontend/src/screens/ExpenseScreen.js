@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoAddCircleSharp, IoPencilSharp, IoTrashSharp } from 'react-icons/io5';
+import { defaultAppContext } from '../Contexts';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import {
@@ -20,6 +21,8 @@ const ExpenseScreen = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { id: expenseId } = useParams();
+
+	const { defaultCurrency } = useContext(defaultAppContext);
 
 	const [name, setName] = useState('');
 	const [amount, setAmount] = useState('');
@@ -200,7 +203,8 @@ const ExpenseScreen = () => {
 														<td className="expense-table-data">{idx + 1}</td>
 														<td className="expense-table-data">{item.name}</td>
 														<td className="expense-table-data">
-															₹{item.amount}
+															{defaultCurrency && defaultCurrency.symbol}
+															{item.amount}
 														</td>
 														<td className="expense-table-data">
 															{item.createdAt.split('T')[0].split('-')[2]}/
@@ -263,13 +267,17 @@ const ExpenseScreen = () => {
 									{expense.user && expense.user.lastName}
 								</div>
 								<div className="expense-stats">
-									<h3>Total:</h3> ₹{expense.maxAmount}
+									<h3>Total:</h3> {defaultCurrency && defaultCurrency.symbol}
+									{expense.maxAmount}
 								</div>
 								<div className="expense-stats">
-									<h3>Spent:</h3> ₹{expense.totalSpent}
+									<h3>Spent:</h3> {defaultCurrency && defaultCurrency.symbol}
+									{expense.totalSpent}
 								</div>
 								<div className="expense-stats">
-									<h3>Remaining:</h3> ₹{expense.maxAmount - expense.totalSpent}
+									<h3>Remaining:</h3>{' '}
+									{defaultCurrency && defaultCurrency.symbol}
+									{expense.maxAmount - expense.totalSpent}
 								</div>
 								{expense.createdAt && (
 									<div className="expense-stats">

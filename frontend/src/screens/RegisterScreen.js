@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoPersonAddSharp } from 'react-icons/io5';
+import { IoPersonAddSharp, IoCaretDownSharp } from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
+import currencies from '../currencies';
 import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -18,6 +19,8 @@ const RegisterScreen = () => {
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
+	const [selectCurrency, setSelectCurrency] = useState(0);
+	const [currency, setCurrency] = useState({});
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passMatchError, setPassMatchError] = useState(null);
@@ -25,6 +28,12 @@ const RegisterScreen = () => {
 	const { userInfo } = useSelector((state) => state.userLogin);
 
 	const { loading, error } = useSelector((state) => state.userRegister);
+
+	useEffect(() => {
+		if (selectCurrency) {
+			setCurrency(currencies.find((item) => item.id === selectCurrency));
+		}
+	}, [selectCurrency, currencies]);
 
 	useEffect(() => {
 		if (userInfo) {
@@ -40,7 +49,17 @@ const RegisterScreen = () => {
 		if (password !== confirmPassword) {
 			setPassMatchError('Passwords do not match');
 		} else {
-			dispatch(register({ firstName, lastName, email, dateOfBirth, password }));
+			dispatch(
+				register({
+					firstName,
+					lastName,
+					email,
+					dateOfBirth,
+					currency,
+					password,
+				})
+			);
+
 			setPassMatchError(null);
 		}
 	};
@@ -115,6 +134,37 @@ const RegisterScreen = () => {
 
 					<span className="spacer"></span>
 
+					<label htmlFor="currency" className="form-label">
+						Currency:
+					</label>
+					<div className="form-select-container">
+						<select
+							required
+							id="currency"
+							className="form-select"
+							onChange={(e) => setSelectCurrency(parseInt(e.target.value))}
+							defaultValue="placeholder"
+						>
+							<option value="placeholder" disabled hidden>
+								Select Your Default Currency
+							</option>
+							{currencies.map((item) => (
+								<option
+									key={item.id}
+									value={item.id}
+									className="form-select-option"
+								>
+									{item.name}
+									{' = '}
+									{item.symbol}
+								</option>
+							))}
+						</select>
+						<IoCaretDownSharp className="form-select-icon" />
+					</div>
+
+					<span className="spacer"></span>
+
 					<label htmlFor="password" className="form-label">
 						Password:
 					</label>
@@ -147,7 +197,9 @@ const RegisterScreen = () => {
 					<button
 						type="submit"
 						className="primary-button register-submit-button"
-						disabled={loading || password !== confirmPassword}
+						disabled={
+							loading || !(password === confirmPassword && currency.name)
+						}
 					>
 						{loading ? (
 							<Loader border="3px" size="30px" color="green" />

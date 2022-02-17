@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { defaultAppContext } from './Contexts';
+import currencies from './currencies';
 import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -13,10 +15,29 @@ import './App.css';
 
 const App = () => {
 	const [addExpenseSection, setAddExpenseSection] = useState(false);
+	const [defaultCurrency, setDefaultCurrency] = useState({
+		name: 'Indian Rupee',
+		code: 'INR',
+		symbol: '₹',
+		id: 69,
+	});
+
+	const { userInfo } = useSelector((state) => state.userLogin);
+
+	useEffect(() => {
+		if (userInfo && userInfo.defaultCurrency) {
+			setDefaultCurrency(userInfo.defaultCurrency);
+		}
+	}, [userInfo]);
 
 	return (
 		<defaultAppContext.Provider
-			value={{ addExpenseSection, setAddExpenseSection }}
+			value={{
+				addExpenseSection,
+				setAddExpenseSection,
+				defaultCurrency,
+				setDefaultCurrency,
+			}}
 		>
 			<div className="background-image">
 				<div className="background-filter">

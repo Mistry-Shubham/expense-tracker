@@ -137,6 +137,43 @@
 	fill: rgba(0, 0, 0, 0.8);
 }
 
+/* h2 Form Select */
+.form-container .form-select-container {
+	background-color: rgba(255, 255, 255, 0.6);
+	margin-top: 10px;
+	position: relative;
+	width: 100%;
+	border-radius: 50vh;
+}
+
+.form-select-container .form-select {
+	color: rgb(0, 0, 0);
+	background-color: transparent;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	font-size: 1.2rem;
+	width: 100%;
+	padding: 5px 20px;
+	border-radius: 50vh;
+	outline: none;
+}
+
+.form-select-container .form-select-option {
+	background-color: lightgray;
+	color: black;
+	font-size: 1.1rem;
+}
+
+.form-container .form-select-icon {
+	position: absolute;
+	top: 50%;
+	right: 4%;
+	transform: translateY(-50%);
+	font-size: large;
+	border-radius: 50%;
+	fill: rgba(0, 0, 0, 0.8);
+}
+
 /* h2 Password Validator */
 .form-container .pass-check-container {
 	padding: 5px;

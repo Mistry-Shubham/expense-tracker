@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { defaultAppContext } from '../Contexts';
 import ProgressBar from './ProgressBar';
 import './components-style.css';
 
 const Expense = ({ expense }) => {
 	const navigate = useNavigate();
+
+	const { defaultCurrency } = useContext(defaultAppContext);
 
 	const [expand, setExpamd] = useState(false);
 
@@ -20,7 +23,10 @@ const Expense = ({ expense }) => {
 				onClick={() => navigate(`/expense/${expense._id}`)}
 			>
 				<h3 className="category">{expense.category}</h3>
-				<p className="expense-remaining">Remaining: ₹{remaining}</p>
+				<p className="expense-remaining">
+					Remaining: {defaultCurrency && defaultCurrency.symbol}
+					{remaining}
+				</p>
 				<p className="expense-created-at">
 					{' '}
 					{expense.createdAt.split('T')[0].split('-')[2]}/
@@ -38,7 +44,8 @@ const Expense = ({ expense }) => {
 					max={expense.maxAmount}
 				/>
 				<label htmlFor="progress-bar" className="amount-label">
-					₹{expense.totalSpent}/{expense.maxAmount}
+					{defaultCurrency && defaultCurrency.symbol}
+					{expense.totalSpent}/{expense.maxAmount}
 				</label>
 			</div>
 			{expand ? (
@@ -51,7 +58,10 @@ const Expense = ({ expense }) => {
 						>
 							<p>{idx + 1}</p>
 							<p>{item.name}</p>
-							<p>{`₹${item.amount}`}</p>
+							<p>
+								{defaultCurrency && defaultCurrency.symbol}
+								{item.amount}
+							</p>
 							<p>
 								{
 									new Date(item.updatedAt)

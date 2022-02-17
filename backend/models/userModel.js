@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		defaultCurrency: {
+			type: Object,
+			// default: { name: 'Indian Rupee', code: 'INR', symbol: '₹', id: 69 },
+		},
 	},
 	{ timestamps: true }
 );

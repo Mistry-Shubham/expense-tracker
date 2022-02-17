@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoPencilSharp, IoCloseSharp, IoSettingsSharp } from 'react-icons/io5';
+import { defaultAppContext } from '../Contexts';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -19,6 +20,8 @@ const ExpenseEditScreen = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { id: expenseId } = useParams();
+
+	const { defaultCurrency } = useContext(defaultAppContext);
 
 	const [category, setCategory] = useState('');
 	const [maxAmount, setMaxAmount] = useState('');
@@ -192,7 +195,8 @@ const ExpenseEditScreen = () => {
 														<td className="expense-table-data">{item._id}</td>
 														<td className="expense-table-data">{item.name}</td>
 														<td className="expense-table-data">
-															₹{item.amount}
+															{defaultCurrency && defaultCurrency.symbol}
+															{item.amount}
 														</td>
 														<td className="expense-table-data">
 															<button

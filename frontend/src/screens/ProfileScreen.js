@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoPencilSharp, IoSettingsSharp, IoCloseSharp } from 'react-icons/io5';
+import {
+	IoPencilSharp,
+	IoSettingsSharp,
+	IoCloseSharp,
+	IoCaretDownSharp,
+} from 'react-icons/io5';
+import { defaultAppContext } from '../Contexts';
+import currencies from '../currencies';
 import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -13,11 +20,15 @@ const ProfileScreen = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
+	const { setDefaultCurrency } = useContext(defaultAppContext);
+
 	const [editScreen, setEditScreen] = useState(false);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
+	const [selectCurrency, setSelectCurrency] = useState(0);
+	const [currency, setCurrency] = useState({});
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passMatchError, setPassMatchError] = useState(null);
@@ -26,9 +37,25 @@ const ProfileScreen = () => {
 
 	const { loading, user, error } = useSelector((state) => state.userProfile);
 
-	const { loading: loadingUpdate, error: errorUpdate } = useSelector(
-		(state) => state.userUpdateProfile
-	);
+	const {
+		loading: loadingUpdate,
+		success: successUpdate,
+		error: errorUpdate,
+	} = useSelector((state) => state.userUpdateProfile);
+
+	useEffect(() => {
+		if (selectCurrency) {
+			setCurrency(currencies.find((item) => item.id === selectCurrency));
+		}
+	}, [selectCurrency, currencies]);
+
+	useEffect(() => {
+		if (successUpdate) {
+			dispatch(getUserProfile());
+			setDefaultCurrency(currency);
+			setEditScreen(false);
+		}
+	}, [successUpdate, currency]);
 
 	useEffect(() => {
 		if (!userInfo) {
@@ -38,10 +65,6 @@ const ProfileScreen = () => {
 		if (!user._id) {
 			dispatch(getUserProfile());
 		} else {
-			setFirstName(user.firstName);
-			setLastName(user.lastName);
-			setEmail(user.email);
-			setDateOfBirth(user.dateOfBirth);
 			dispatch({ type: USER_PROFILE_UPDATE_RESET });
 		}
 	}, [navigate, userInfo, dispatch, user]);
@@ -53,10 +76,15 @@ const ProfileScreen = () => {
 		} else {
 			setPassMatchError(null);
 			dispatch(
-				updateUserProfile({ firstName, lastName, email, dateOfBirth, password })
+				updateUserProfile({
+					firstName,
+					lastName,
+					email,
+					dateOfBirth,
+					currency,
+					password,
+				})
 			);
-			dispatch(getUserProfile());
-			setEditScreen(false);
 		}
 	};
 
@@ -87,6 +115,14 @@ const ProfileScreen = () => {
 							<p className="profile-content">
 								<span className="bold">Age:</span> {user.age}
 							</p>
+							{user.defaultCurrency && (
+								<p className="profile-content">
+									<span className="bold">Currency:</span>{' '}
+									{user.defaultCurrency.name}
+									{' - '}
+									{user.defaultCurrency.symbol}
+								</p>
+							)}
 							<button
 								onClick={() => setEditScreen(!editScreen)}
 								className="primary-button profile-edit-button"
@@ -120,7 +156,7 @@ const ProfileScreen = () => {
 										className="form-input"
 										value={firstName}
 										onChange={(e) => setFirstName(e.target.value)}
-										placeholder="Enter your First Name"
+										placeholder={user.firstName}
 									/>
 								</div>
 
@@ -134,7 +170,7 @@ const ProfileScreen = () => {
 										className="form-input"
 										value={lastName}
 										onChange={(e) => setLastName(e.target.value)}
-										placeholder="Enter your Last Name"
+										placeholder={user.lastName}
 									/>
 								</div>
 							</div>
@@ -150,7 +186,7 @@ const ProfileScreen = () => {
 								className="form-input"
 								value={email}
 								onChange={(e) => setEmail(e.target.value)}
-								placeholder="Enter your E-Mail"
+								placeholder={user.email}
 							/>
 
 							<span className="spacer"></span>
@@ -168,6 +204,37 @@ const ProfileScreen = () => {
 
 							<span className="spacer"></span>
 
+							<label htmlFor="currency" className="form-label">
+								Currency:
+							</label>
+							<div className="form-select-container">
+								<select
+									required
+									id="currency"
+									className="form-select"
+									onChange={(e) => setSelectCurrency(parseInt(e.target.value))}
+									defaultValue="placeholder"
+								>
+									<option value="placeholder" disabled hidden>
+										Select Your Default Currency
+									</option>
+									{currencies.map((item) => (
+										<option
+											key={item.id}
+											value={item.id}
+											className="form-select-option"
+										>
+											{item.name}
+											{' = '}
+											{item.symbol}
+										</option>
+									))}
+								</select>
+								<IoCaretDownSharp className="form-select-icon" />
+							</div>
+
+							<span className="spacer"></span>
+
 							<label htmlFor="password" className="form-label">
 								Password:
 							</label>
@@ -175,7 +242,7 @@ const ProfileScreen = () => {
 								id="password"
 								value={password}
 								setValue={setPassword}
-								placeholder="Enter your Password"
+								placeholder="Enter your New Password"
 								passCheck
 							/>
 
@@ -188,7 +255,7 @@ const ProfileScreen = () => {
 								id="confirmPassword"
 								value={confirmPassword}
 								setValue={setConfirmPassword}
-								placeholder="Enter your Password again"
+								placeholder="Enter your New Password again"
 							/>
 							{confirmPassword.length > 0 && password !== confirmPassword ? (
 								<div style={{ color: 'red' }}>Passwords do not match</div>
