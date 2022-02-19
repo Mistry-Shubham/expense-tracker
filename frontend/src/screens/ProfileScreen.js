@@ -20,7 +20,7 @@ const ProfileScreen = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
-	const { setDefaultCurrency } = useContext(defaultAppContext);
+	const { defaultCurrency, setDefaultCurrency } = useContext(defaultAppContext);
 
 	const [editScreen, setEditScreen] = useState(false);
 	const [firstName, setFirstName] = useState('');
@@ -28,7 +28,7 @@ const ProfileScreen = () => {
 	const [email, setEmail] = useState('');
 	const [dateOfBirth, setDateOfBirth] = useState('');
 	const [selectCurrency, setSelectCurrency] = useState(0);
-	const [currency, setCurrency] = useState({});
+	const [currency, setCurrency] = useState(defaultCurrency);
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [passMatchError, setPassMatchError] = useState(null);

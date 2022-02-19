@@ -1,7 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoAddSharp, IoAddCircleSharp } from 'react-icons/io5';
+import {
+	IoAddSharp,
+	IoAddCircleSharp,
+	IoFilterSharp,
+	IoCheckmarkSharp,
+	IoCloseSharp,
+	IoSearchSharp,
+} from 'react-icons/io5';
 import { FiExternalLink } from 'react-icons/fi';
 import { defaultAppContext } from '../Contexts';
 import Expense from '../components/Expense';
@@ -21,6 +28,11 @@ const HomeScreen = () => {
 
 	const [category, setCategory] = useState('');
 	const [maxAmount, setMaxAmount] = useState('');
+	const [search, setSearch] = useState('');
+	const [filter, setFilter] = useState('');
+	const [toggleFilter, setToggleFilter] = useState(false);
+	const [filteredExpenses, setFilteredExpenses] = useState([]);
+	const [renderExpenses, setRenderExpenses] = useState([]);
 
 	const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -36,12 +48,182 @@ const HomeScreen = () => {
 	} = useSelector((state) => state.expenseCreateNew);
 
 	useEffect(() => {
+		const sortBy = {
+			timeAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.createdAt > b.createdAt
+							? 1
+							: a.createdAt < b.createdAt
+							? -1
+							: a.category.localeCompare(b.category)
+					)
+				);
+			},
+			categoryAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.category > b.category ? 1 : a.category < b.category ? -1 : 0
+					)
+				);
+			},
+			maxAmountAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.maxAmount > b.maxAmount
+							? 1
+							: a.maxAmount < b.maxAmount
+							? -1
+							: a.category.localeCompare(b.category)
+					)
+				);
+			},
+			totalSpentAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.totalSpent > b.totalSpent
+							? 1
+							: a.totalSpent < b.totalSpent
+							? -1
+							: a.category.localeCompare(b.category)
+					)
+				);
+			},
+			remainingAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.maxAmount - a.totalSpent > b.maxAmount - b.totalSpent
+							? 1
+							: a.maxAmount - a.totalSpent < b.maxAmount - b.totalSpent
+							? -1
+							: a.category.localeCompare(b.category)
+					)
+				);
+			},
+			expenseListAsce() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.expenseList.length > b.expenseList.length
+							? 1
+							: a.expenseList.length < b.expenseList.length
+							? -1
+							: a.category.localeCompare(b.category)
+					)
+				);
+			},
+
+			timeDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.createdAt > b.createdAt
+							? -1
+							: a.createdAt < b.createdAt
+							? 1
+							: b.category.localeCompare(a.category)
+					)
+				);
+			},
+			categoryDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.category > b.category ? -1 : a.category < b.category ? 1 : 0
+					)
+				);
+			},
+			maxAmountDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.maxAmount > b.maxAmount
+							? -1
+							: a.maxAmount < b.maxAmount
+							? 1
+							: b.category.localeCompare(a.category)
+					)
+				);
+			},
+			totalSpentDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.totalSpent > b.totalSpent
+							? -1
+							: a.totalSpent < b.totalSpent
+							? 1
+							: b.category.localeCompare(a.category)
+					)
+				);
+			},
+			remainingDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.maxAmount - a.totalSpent > b.maxAmount - b.totalSpent
+							? -1
+							: a.maxAmount - a.totalSpent < b.maxAmount - b.totalSpent
+							? 1
+							: b.category.localeCompare(a.category)
+					)
+				);
+			},
+			expenseListDesc() {
+				setFilteredExpenses(
+					expenses.sort((a, b) =>
+						a.expenseList.length > b.expenseList.length
+							? -1
+							: a.expenseList.length < b.expenseList.length
+							? 1
+							: b.category.localeCompare(a.category)
+					)
+				);
+			},
+		};
+		if (expenses) {
+			if (filter === 'timeAsce') {
+				sortBy.timeAsce();
+			} else if (filter === 'categoryAsce') {
+				sortBy.categoryAsce();
+			} else if (filter === 'maxAmountAsce') {
+				sortBy.maxAmountAsce();
+			} else if (filter === 'totalSpentAsce') {
+				sortBy.totalSpentAsce();
+			} else if (filter === 'remainingAsce') {
+				sortBy.remainingAsce();
+			} else if (filter === 'expenseListAsce') {
+				sortBy.expenseListAsce();
+			} else if (filter === 'categoryDesc') {
+				sortBy.categoryDesc();
+			} else if (filter === 'maxAmountDesc') {
+				sortBy.maxAmountDesc();
+			} else if (filter === 'totalSpentDesc') {
+				sortBy.totalSpentDesc();
+			} else if (filter === 'remainingDesc') {
+				sortBy.remainingDesc();
+			} else if (filter === 'expenseListDesc') {
+				sortBy.expenseListDesc();
+				console.log('wow');
+			} else {
+				sortBy.timeDesc();
+			}
+		}
+	}, [expenses, filter, toggleFilter]);
+
+	useEffect(() => {
+		if (search.length > 0) {
+			setRenderExpenses(
+				filteredExpenses.filter((item) =>
+					item.category.toLowerCase().includes(search.toLowerCase())
+				)
+			);
+		} else {
+			setRenderExpenses(filteredExpenses);
+		}
+	}, [search, filteredExpenses]);
+
+	useEffect(() => {
 		if (successCreate) {
 			navigate(`/expense/${expenseCreate._id}`);
 			dispatch({ type: CREATE_NEW_EXPENSE_RESET });
 		}
 		dispatch(listMyExpenses());
-	}, [dispatch, successCreate]);
+	}, [navigate, dispatch, successCreate, expenseCreate]);
 
 	const toggleAddExpense = () => setAddExpenseSection(!addExpenseSection);
 
@@ -186,10 +368,190 @@ const HomeScreen = () => {
 										</p>
 									</div>
 								</div>
+								<div className="expenses-filter-container">
+									<div className="filter-toggle">
+										<div className="search-bar-container">
+											<input
+												type="text"
+												onChange={(e) => setSearch(e.target.value)}
+												className="search-bar"
+												placeholder="Search With Category"
+											/>
+											<IoSearchSharp className="search-bar-icon" />
+										</div>
+										<IoFilterSharp
+											className="filter-icon"
+											onClick={() => setToggleFilter(!toggleFilter)}
+										/>
+									</div>
+
+									{toggleFilter && (
+										<div className="filter-category-container">
+											<fieldset>
+												<legend>Low to High</legend>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'timeAsce'}
+														id="timeAsce"
+														value="timeAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="timeAsce">Time</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'categoryAsce'}
+														id="categoryAsce"
+														value="categoryAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="categoryAsce">Category</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'maxAmountAsce'}
+														id="maxAmountAsce"
+														value="maxAmountAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="maxAmountAsce">Max Amount</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'totalSpentAsce'}
+														id="totalSpentAsce"
+														value="totalSpentAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="totalSpentAsce">Total Spent</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'remainingAsce'}
+														id="remainingAsce"
+														value="remainingAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="remainingAsce">Remaining</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'expenseListAsce'}
+														id="expenseListAsce"
+														value="expenseListAsce"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="expenseListAsce">Expense List</label>
+												</div>
+											</fieldset>
+											<fieldset>
+												<legend>High to Low</legend>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === ''}
+														id="timeDesc"
+														value=""
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="timeDesc">Time</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'categoryDesc'}
+														id="categoryDesc"
+														value="categoryDesc"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="categoryDesc">Category</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'maxAmountDesc'}
+														id="maxAmountDesc"
+														value="maxAmountDesc"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="maxAmountDesc">Max Amount</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'totalSpentDesc'}
+														id="totalSpentDesc"
+														value="totalSpentDesc"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="totalSpentDesc">Total Spent</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'remainingDesc'}
+														id="remainingDesc"
+														value="remainingDesc"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="remainingDesc">Remaining</label>
+												</div>
+												<div>
+													<input
+														type="radio"
+														name="filter"
+														defaultChecked={filter === 'expenseListDesc'}
+														id="expenseListDesc"
+														value="expenseListDesc"
+														onClick={(e) => setFilter(e.target.value)}
+													/>
+													<label htmlFor="expenseListDesc">Expense List</label>
+												</div>
+											</fieldset>
+											<div className="filter-button-container">
+												<button
+													className="primary-button filter-button"
+													onClick={() => setToggleFilter(false)}
+												>
+													<IoCheckmarkSharp className="margin-right" />
+													Apply
+												</button>
+												<button
+													className="primary-delete filter-button"
+													onClick={() => {
+														setFilter('');
+														setTimeout(() => setToggleFilter(false), 5);
+													}}
+												>
+													<IoCloseSharp className="margin-right" />
+													Clear
+												</button>
+											</div>
+										</div>
+									)}
+								</div>
 								<div className="expenses-grid">
-									{expenses.map((expense, idx) => (
-										<Expense key={idx + 1} expense={expense} />
-									))}
+									{renderExpenses &&
+										renderExpenses.map((expense, idx) => (
+											<Expense key={idx + 1} expense={expense} />
+										))}
 								</div>
 							</>
 						)}
