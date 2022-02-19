@@ -15,6 +15,7 @@ import Expense from '../components/Expense';
 import FormContainer from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import Pagination from '../components/Pagination';
 import { listMyExpenses, createNewExpense } from '../actions/expenseActions';
 import { CREATE_NEW_EXPENSE_RESET } from '../constants/expenseConstants';
 import './screens-style.css';
@@ -33,6 +34,11 @@ const HomeScreen = () => {
 	const [toggleFilter, setToggleFilter] = useState(false);
 	const [filteredExpenses, setFilteredExpenses] = useState([]);
 	const [renderExpenses, setRenderExpenses] = useState([]);
+	const [pageNumber, setPageNumber] = useState(0);
+
+	const expensesPerPage = 10;
+	const pageVisited = pageNumber * expensesPerPage;
+	const pageCount = Math.ceil(renderExpenses.length / expensesPerPage);
 
 	const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -198,7 +204,6 @@ const HomeScreen = () => {
 				sortBy.remainingDesc();
 			} else if (filter === 'expenseListDesc') {
 				sortBy.expenseListDesc();
-				console.log('wow');
 			} else {
 				sortBy.timeDesc();
 			}
@@ -237,6 +242,8 @@ const HomeScreen = () => {
 		);
 		setAddExpenseSection(false);
 	};
+
+	const pageChangeHandler = ({ selected }) => setPageNumber(selected);
 
 	return (
 		<div className="main-container">
@@ -549,10 +556,18 @@ const HomeScreen = () => {
 								</div>
 								<div className="expenses-grid">
 									{renderExpenses &&
-										renderExpenses.map((expense, idx) => (
-											<Expense key={idx + 1} expense={expense} />
-										))}
+										renderExpenses
+											.slice(pageVisited, pageVisited + expensesPerPage)
+											.map((expense, idx) => (
+												<Expense key={idx + 1} expense={expense} />
+											))}
 								</div>
+								{pageCount > 1 && (
+									<Pagination
+										onPageChange={pageChangeHandler}
+										pageCount={pageCount}
+									/>
+								)}
 							</>
 						)}
 					</>

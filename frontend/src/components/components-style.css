@@ -391,11 +391,6 @@
 	color: rgba(255, 255, 255, 0.9);
 }
 
-.expense-heading .expense-remaining {
-	font-size: large;
-	color: rgb(40, 200, 69);
-}
-
 /* h2 Progress Bar */
 .expense-amount {
 	display: flex;
@@ -428,6 +423,12 @@
 	color: rgba(255, 255, 255, 0.6);
 }
 
+.expense-list .more-items {
+	color: rgba(255, 255, 255, 0.6);
+	font-size: 15px;
+	text-align: center;
+}
+
 /* h2 Expense Card Expand */
 .expense-container .expand-card {
 	text-align: center;
@@ -439,6 +440,69 @@
 	text-decoration: underline;
 	color: rgba(255, 255, 255, 0.8);
 	cursor: pointer;
+}
+
+/* h1 Progress Bar */
+.progress-bar-container .para {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: black;
+	transform: translate(-50%, -50%);
+}
+
+/* h1 Pagination */
+.pagination-continer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	max-width: 100%;
+	margin-top: 20px;
+}
+
+.pagination-ul-container {
+	display: flex;
+	width: 50%;
+	justify-content: space-between;
+}
+
+.pagination-ul-container li {
+	list-style: none;
+}
+
+.pagination-ul-container li a {
+	padding: 10px;
+	display: flex;
+	height: 40px;
+	width: 40px;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+}
+
+.pagination-ul-container li a:hover {
+	background-color: teal;
+}
+
+.pagination-ul-container .page-active {
+	background-color: teal;
+	border-radius: 50%;
+}
+
+.pagination-ul-container .page-disabled {
+	background-color: teal;
+	border-radius: 50%;
+}
+
+.pagination-ul-container .next-button,
+.pagination-ul-container .previous-button {
+	background-color: teal;
+	border-radius: 15px;
+}
+
+.pagination-ul-container .next-button:hover,
+.pagination-ul-container .previous-button:hover {
+	background-color: rgb(0, 170, 170);
 }
 
 @media only screen and (max-width: 700px) {
@@ -496,5 +560,21 @@
 
 	.expense-container .expense-heading {
 		flex-wrap: wrap;
+	}
+
+	/* h1 Pagination */
+	.pagination-ul-container {
+		width: 100%;
+	}
+
+	.pagination-ul-container li a {
+		padding: 2px;
+		height: 20px;
+		width: 20px;
+	}
+
+	.pagination-ul-container li a:hover {
+		color: white;
+		background-color: transparent;
 	}
 }

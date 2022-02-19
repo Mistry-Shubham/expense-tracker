@@ -23,10 +23,6 @@ const Expense = ({ expense }) => {
 				onClick={() => navigate(`/expense/${expense._id}`)}
 			>
 				<h3 className="category">{expense.category}</h3>
-				<p className="expense-remaining">
-					Remaining: {defaultCurrency && defaultCurrency.symbol}
-					{remaining}
-				</p>
 				<p className="expense-created-at">
 					{' '}
 					{expense.createdAt.split('T')[0].split('-')[2]}/
@@ -50,7 +46,7 @@ const Expense = ({ expense }) => {
 			</div>
 			{expand ? (
 				<div className="expense-list">
-					{expense.expenseList.map((item, idx) => (
+					{expense.expenseList.slice(0, 4).map((item, idx) => (
 						<div
 							key={idx + 1}
 							className="list-container"
@@ -90,6 +86,14 @@ const Expense = ({ expense }) => {
 							</p>
 						</div>
 					))}
+					{expense.expenseList.length > 4 && (
+						<p
+							className="more-items"
+							onClick={() => navigate(`/expense/${expense._id}`)}
+						>
+							Open to view more items
+						</p>
+					)}
 					<p className="expand-card" onClick={() => setExpamd(false)}>
 						Show Less
 					</p>

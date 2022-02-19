@@ -1,7 +1,12 @@
+import { useContext } from 'react';
+import { defaultAppContext } from '../Contexts';
 import './components-style.css';
 
 const ProgressBar = ({ progress, max }) => {
+	const { defaultCurrency } = useContext(defaultAppContext);
+
 	const percentage = (progress / max) * 100;
+	const remaining = max - progress;
 
 	let progressColor;
 
@@ -21,6 +26,7 @@ const ProgressBar = ({ progress, max }) => {
 		backgroundColor: 'whitesmoke',
 		borderRadius: '40px',
 		margin: '10px 0px',
+		position: 'relative',
 		overflow: 'hidden',
 	};
 
@@ -33,7 +39,11 @@ const ProgressBar = ({ progress, max }) => {
 	};
 
 	return (
-		<div style={progressContainer}>
+		<div style={progressContainer} className="progress-bar-container">
+			<p className="para">
+				{defaultCurrency && defaultCurrency.symbol}
+				{remaining}
+			</p>
 			<div style={progressIndicator}>
 				<div>{percentage > 100 ? 'Limit Exceeded' : ''}</div>
 			</div>
