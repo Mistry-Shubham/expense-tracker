@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import VerifyScreen from './screens/VerifyScreen';
 import ExpenseScreen from './screens/ExpenseScreen';
 import ExpenseEditScreen from './screens/ExpenseEditScreen';
 import Footer from './components/Footer';
@@ -48,6 +49,7 @@ const App = () => {
 							<Route path="/login" element={<LoginScreen />} />
 							<Route path="/profile" element={<ProfileScreen />} />
 							<Route path="/register" element={<RegisterScreen />} />
+							<Route path="/verify" element={<VerifyScreen />} />
 							<Route path="/expense/:id" element={<ExpenseScreen />} />
 							<Route path="/expense/:id/edit" element={<ExpenseEditScreen />} />
 						</Routes>

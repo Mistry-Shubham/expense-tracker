@@ -27,7 +27,9 @@ const RegisterScreen = () => {
 
 	const { userInfo } = useSelector((state) => state.userLogin);
 
-	const { loading, error } = useSelector((state) => state.userRegister);
+	const { loading, success, error } = useSelector(
+		(state) => state.userRegister
+	);
 
 	useEffect(() => {
 		if (selectCurrency) {
@@ -36,13 +38,15 @@ const RegisterScreen = () => {
 	}, [selectCurrency, currencies]);
 
 	useEffect(() => {
-		if (userInfo) {
+		if (success) {
+			navigate('/verify');
+		} else if (userInfo) {
 			navigate('/');
 			dispatch({ type: USER_REGISTER_RESET });
 		} else {
 			dispatch({ type: USER_REGISTER_RESET });
 		}
-	}, [navigate, dispatch, userInfo]);
+	}, [navigate, dispatch, userInfo, success]);
 
 	const registerUserHandler = (e) => {
 		e.preventDefault();

@@ -334,6 +334,52 @@
 	width: 30%;
 }
 
+/* h1 Verify Screen */
+.main-container .verify-screen {
+	display: flex;
+	flex-direction: column;
+	height: 60vh;
+	width: 80vw;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+
+.main-container .verify-screen .verify-screen-container {
+	background-color: rgba(255, 255, 255, 0.6);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 50%;
+	padding: 20px 30px;
+	border-radius: 20px;
+}
+
+.verify-screen h2 {
+	color: green;
+}
+
+.verify-screen .verify-icon {
+	fill: teal;
+	height: 80px;
+	width: 80px;
+	margin-bottom: 20px;
+}
+
+.verify-screen p {
+	color: black;
+}
+
+.verify-screen .verify-content {
+	font-size: larger;
+	margin-bottom: 20px;
+}
+
+.verify-screen .verify-content b {
+	color: black;
+}
+
 /* h1 Expense Screen */
 .expense-screen {
 	max-width: 100vw;
@@ -626,6 +672,26 @@
 	/* h1 Register Screen */
 	.register-screen .register-submit-button {
 		width: 40%;
+	}
+
+	/* h1 Verify Screen */
+	.main-container .verify-screen {
+		width: 95vw;
+	}
+	.main-container .verify-screen .verify-screen-container {
+		padding: 5px 20px;
+	}
+
+	.verify-screen h2 {
+		text-align: center;
+	}
+
+	.verify-screen .verify-icon {
+		margin-bottom: 10px;
+	}
+
+	.verify-screen .verify-content {
+		text-align: center;
 	}
 
 	/* h1 Expense Screen */

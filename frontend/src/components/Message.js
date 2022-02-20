@@ -9,14 +9,16 @@ import {
 const Message = ({ type = 'error', children }) => {
 	return (
 		<div className="alert-message" id={type}>
-			{type === 'info' ? (
-				<IoInformationCircle className="margin-right alert-icon" />
-			) : type === 'success' ? (
-				<IoCheckmarkCircleSharp className="margin-right alert-icon" />
-			) : type === 'error' ? (
-				<IoAlertCircleSharp className="margin-right alert-icon" />
-			) : null}
-			{children}
+			<p>
+				{type === 'info' ? (
+					<IoInformationCircle className="margin-right alert-icon" />
+				) : type === 'success' ? (
+					<IoCheckmarkCircleSharp className="margin-right alert-icon" />
+				) : type === 'error' ? (
+					<IoAlertCircleSharp className="margin-right alert-icon" />
+				) : null}
+				{children}
+			</p>
 		</div>
 	);
 };

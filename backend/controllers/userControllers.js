@@ -1,4 +1,6 @@
 import asyncHandler from 'express-async-handler';
+import schedule from 'node-schedule';
+import chalk from 'chalk';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 
@@ -56,6 +58,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 			dateOfBirth: user.dateOfBirth,
 			age: user.age,
 			defaultCurrency: user.defaultCurrency,
+			isVerified: user.isVerified,
 			token: generateToken(user._id),
 		});
 	} else {
@@ -72,20 +75,35 @@ export const authUser = asyncHandler(async (req, res) => {
 
 	const user = await User.findOne({ email });
 
-	if (user && (await user.matchPassword(password))) {
-		res.json({
-			_id: user._id,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			email: user.email,
-			dateOfBirth: user.dateOfBirth,
-			age: user.age,
-			defaultCurrency: user.defaultCurrency,
-			token: generateToken(user._id),
-		});
+	if (user) {
+		if (!user.isVerified) {
+			res.status(401);
+			throw new Error(
+				'Your account is not verified please check your inbox to verify your account'
+			);
+		} else {
+			if (user && (await user.matchPassword(password))) {
+				res.json({
+					_id: user._id,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email: user.email,
+					dateOfBirth: user.dateOfBirth,
+					age: user.age,
+					defaultCurrency: user.defaultCurrency,
+					isVerified: user.isVerified,
+					token: generateToken(user._id),
+				});
+			} else {
+				res.status(401);
+				throw new Error('Invalid email or password');
+			}
+		}
 	} else {
-		res.status(401);
-		throw new Error('Invalid email or password');
+		res.status(404);
+		throw new Error(
+			'Account does not exist register again to verify your email or Login again with correct credentials '
+		);
 	}
 });
 
@@ -202,3 +220,29 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 		throw new Error('User not found');
 	}
 });
+
+// Delete user if not verified email within 30 minutes of registration
+const job = schedule.scheduleJob('* * * * *', function () {
+	return deleteUnrecognizedUsers();
+});
+
+const deleteUnrecognizedUsers = () => {
+	const currentDate = new Date();
+	currentDate.setMinutes(currentDate.getMinutes() - 30);
+
+	User.deleteMany({ isVerified: false, createdAt: { $lte: currentDate } })
+		.then((result) => {
+			if (result.deletedCount > 0) {
+				console.log(
+					chalk.yellowBright(
+						`Deleted ${result.deletedCount} Unrecognized Users`
+					)
+				);
+			}
+		})
+		.catch((err) =>
+			console.error(
+				chalk.redBright(`Error while deleting Unrecognized Users ${err}`)
+			)
+		);
+};
