@@ -40,7 +40,7 @@ const LoginScreen = () => {
 						E-Mail
 					</label>
 					<input
-						type="text"
+						type="email"
 						id="email"
 						className="form-input"
 						value={email}
@@ -60,11 +60,17 @@ const LoginScreen = () => {
 						placeholder="Enter your Password"
 					/>
 
-					<span className="spacer"></span>
+					<Link
+						to="/reset-pssword"
+						className="remove-link-underline forgot-password"
+					>
+						Forgot Password ?
+					</Link>
 
 					<button
+						type="submit"
 						className="primary-button form-submit-button"
-						disabled={loading}
+						disabled={loading || email.length === 0 || password.length === 0}
 					>
 						{loading ? (
 							<Loader border="3px" size="30px" color="green" />
@@ -88,6 +94,9 @@ const LoginScreen = () => {
 						</Link>
 					</p>
 				</FormContainer>
+				{error && error.includes('credentials') && (
+					<p style={{ textAlign: 'center' }}>Hello</p>
+				)}
 			</div>
 		</div>
 	);

@@ -229,6 +229,12 @@
 	margin-left: 5px;
 }
 
+.login-screen .forgot-password {
+	text-align: end;
+	color: rgba(255, 255, 255, 0.6);
+	margin-top: 10px;
+}
+
 /* h1 Profile Screen */
 .profile-screen {
 	position: relative;

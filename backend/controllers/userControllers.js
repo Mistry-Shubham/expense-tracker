@@ -1,8 +1,10 @@
 import asyncHandler from 'express-async-handler';
+import jwt from 'jsonwebtoken';
 import schedule from 'node-schedule';
 import chalk from 'chalk';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import sendMail from '../utils/userVerficationMail.js';
 
 //@desc   	Register new user
 //route     POST/api/users
@@ -61,6 +63,26 @@ export const registerUser = asyncHandler(async (req, res) => {
 			isVerified: user.isVerified,
 			token: generateToken(user._id),
 		});
+
+		const userVeficationToken = generateToken(
+			user._id,
+			process.env.USER_VERFICATION_SECRET,
+			'30m'
+		);
+
+		if (userVeficationToken) {
+			const URL = `http://localhost:5000/api/users/verify/${userVeficationToken}`;
+			sendMail(
+				{
+					user: process.env.GMAIL_USER,
+					pass: process.env.GMAIL_PASS,
+					receiver: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName,
+				},
+				URL
+			);
+		}
 	} else {
 		res.status(400);
 		throw new Error('Invalid user data');
@@ -218,6 +240,39 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
 	} else {
 		res.status(404);
 		throw new Error('User not found');
+	}
+});
+
+//@desc     Verfiy Refistered Users
+//route     GET/api/users/verify/:token
+//access    public
+export const verifyUser = asyncHandler(async (req, res) => {
+	const token = req.params.token;
+	if (token) {
+		const decoded = jwt.verify(token, process.env.USER_VERFICATION_SECRET);
+		if (decoded.id) {
+			const user = await User.findById(decoded.id);
+			if (user) {
+				user.isVerified = true;
+
+				const verifiedUser = await user.save();
+
+				if (verifiedUser) {
+					res
+						.status(201)
+						.send(`${verifiedUser.firstName} your account is verfied`);
+				}
+			} else {
+				res.status(401).send('Token expired signup again');
+				throw new Error('Token expired signup again');
+			}
+		} else {
+			res.status(401).send('Token invalid or expired');
+			throw new Error('Token invalid or expired');
+		}
+	} else {
+		res.status(404).send('Token not found');
+		throw new Error('Token not found');
 	}
 });
 
