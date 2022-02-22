@@ -15,6 +15,9 @@ import {
 	USER_REGISTER_REQUEST,
 	USER_REGISTER_SUCCESS,
 	USER_REGISTER_FAIL,
+	USER_RESET_PASSWORD_REQUEST,
+	USER_RESET_PASSWORD_SUCCESS,
+	USER_RESET_PASSWORD_FAIL,
 } from '../constants/userConstants';
 import { EXPENSE_BY_ID_RESET } from '../constants/expenseConstants';
 
@@ -130,6 +133,44 @@ export const register = (user) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: USER_REGISTER_FAIL,
+			payload:
+				err.response && err.response.data.message
+					? err.response.data.message
+					: err.message,
+		});
+	}
+};
+
+export const passwordReset = (newData) => async (dispatch) => {
+	try {
+		const { email, password, resetId, step } = newData;
+		dispatch({ type: USER_RESET_PASSWORD_REQUEST });
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		if (step === 'step1') {
+			const { data } = await axios.post(
+				`/api/users/password-reset/${step}/CZqFzu`,
+				{ email },
+				config
+			);
+			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
+		}
+		if (step === 'step3') {
+			const { data } = await axios.put(
+				`/api/users/password-reset/${step}/CZqFzu`,
+				{ resetId, password },
+				config
+			);
+			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
+		}
+	} catch (err) {
+		dispatch({
+			type: USER_RESET_PASSWORD_FAIL,
 			payload:
 				err.response && err.response.data.message
 					? err.response.data.message

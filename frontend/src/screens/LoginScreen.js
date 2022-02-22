@@ -61,7 +61,7 @@ const LoginScreen = () => {
 					/>
 
 					<Link
-						to="/reset-pssword"
+						to="/reset-password"
 						className="remove-link-underline forgot-password"
 					>
 						Forgot Password ?
@@ -94,6 +94,7 @@ const LoginScreen = () => {
 						</Link>
 					</p>
 				</FormContainer>
+				{/* //^ Resend verification Code */}
 				{error && error.includes('credentials') && (
 					<p style={{ textAlign: 'center' }}>Hello</p>
 				)}

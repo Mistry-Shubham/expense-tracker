@@ -235,6 +235,20 @@
 	margin-top: 10px;
 }
 
+/* h1 Reset Password Screen */
+.reset-password-screen .reset-password-button {
+	padding: 8px;
+	height: 40px;
+	width: 160px;
+	margin-right: 30px;
+	font-size: large;
+}
+
+.reset-password-screen .link {
+	text-align: center;
+	margin-top: 8px;
+}
+
 /* h1 Profile Screen */
 .profile-screen {
 	position: relative;

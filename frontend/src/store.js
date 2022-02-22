@@ -6,6 +6,7 @@ import {
 	userProfileReducer,
 	userUpdateProfileReducer,
 	userRegisterReducer,
+	userPasswordResetReducer,
 } from './reducers/userReducers';
 import {
 	expenseMyListReducer,
@@ -23,6 +24,7 @@ const reducer = combineReducers({
 	userProfile: userProfileReducer,
 	userUpdateProfile: userUpdateProfileReducer,
 	userRegister: userRegisterReducer,
+	userPasswordReset: userPasswordResetReducer,
 	expenseMyList: expenseMyListReducer,
 	expenseCreateNew: expenseCreateNewReducer,
 	expenseGetById: expenseGetByIdReducer,

@@ -6,6 +6,8 @@ import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import sendMail from '../utils/userVerficationMail.js';
 
+const mainUrl = 'http://localhost:5000';
+
 //@desc   	Register new user
 //route     POST/api/users
 //access    public
@@ -71,7 +73,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 		);
 
 		if (userVeficationToken) {
-			const URL = `http://localhost:5000/api/users/verify/${userVeficationToken}`;
+			const URL = `${mainUrl}/api/users/verify/${userVeficationToken}`;
 			sendMail(
 				{
 					user: process.env.GMAIL_USER,
@@ -276,11 +278,103 @@ export const verifyUser = asyncHandler(async (req, res) => {
 	}
 });
 
-// Delete user if not verified email within 30 minutes of registration
-const job = schedule.scheduleJob('* * * * *', function () {
-	return deleteUnrecognizedUsers();
+//@desc     Verify User Email
+//route     POST or GET or PUT/api/users/password-reset/:step
+//access    public
+export const userPasswordReset = asyncHandler(async (req, res) => {
+	const { step, token } = req.params;
+
+	if (step === 'step1') {
+		const user = await User.findOne({ email: req.body.email });
+		if (user) {
+			res.status(200).json({
+				email: user.email,
+				resetId: user._id,
+			});
+
+			const passwordResetToken = generateToken(
+				user._id,
+				process.env.USER_VERFICATION_SECRET,
+				'10m'
+			);
+
+			if (passwordResetToken) {
+				const URL = `${mainUrl}/api/users/password-reset/step2/${passwordResetToken}`;
+				sendMail(
+					{
+						user: process.env.GMAIL_USER,
+						pass: process.env.GMAIL_PASS,
+						receiver: user.email,
+						firstName: user.firstName,
+						lastName: user.lastName,
+						purpose: 'password-reset',
+					},
+					URL
+				);
+			}
+		} else {
+			res.status(404);
+			throw new Error('User not Found');
+		}
+	} else if (step === 'step2') {
+		if (token) {
+			const decoded = jwt.verify(token, process.env.USER_VERFICATION_SECRET);
+			if (decoded.id) {
+				const user = await User.findOneAndUpdate(
+					{ _id: decoded.id },
+					{ passwordReset: true },
+					{ new: true }
+				);
+				if (user) {
+					res
+						.status(200)
+						.send('Account verified go back and reset your password');
+				} else {
+					res.status(404);
+					throw new Error('User not found');
+				}
+			} else {
+				res.status(401).send('Token invalid or expired try again');
+			}
+		}
+	} else if (step === 'step3') {
+		const { resetId, password } = req.body;
+		if (resetId && password) {
+			const user = await User.findById(resetId);
+			if (user) {
+				if (user.passwordReset) {
+					if (password) {
+						user.password = password;
+						user.passwordReset = false;
+
+						await user.save();
+						res.status(200).json({ message: 'Password Reset Successful' });
+					} else {
+						res.status(400);
+						throw new Error('Check paassword and try again');
+					}
+				} else {
+					res.status(401);
+					throw new Error('Verify your email before reseting password');
+				}
+			} else {
+				res.status(404);
+				throw new Error('User not found');
+			}
+		} else {
+			res.status(400);
+			throw new Error('Invalid data');
+		}
+	}
 });
 
+// Scheduled Jobs
+const job = schedule.scheduleJob('* * * * *', () => {
+	deleteUnrecognizedUsers();
+	changePasswordResetStatus();
+});
+
+// Delete user if not verified email within 30 minutes of registration
 const deleteUnrecognizedUsers = () => {
 	const currentDate = new Date();
 	currentDate.setMinutes(currentDate.getMinutes() - 30);
@@ -300,4 +394,21 @@ const deleteUnrecognizedUsers = () => {
 				chalk.redBright(`Error while deleting Unrecognized Users ${err}`)
 			)
 		);
+};
+
+// Change user passwordReset status to false
+const changePasswordResetStatus = async () => {
+	const currentDate = new Date();
+	currentDate.setMinutes(currentDate.getMinutes() - 10);
+
+	const user = await User.findOne({
+		passwordReset: true,
+		updatedAt: { $lte: currentDate },
+	});
+
+	if (user) {
+		user.passwordReset = false;
+		await user.save();
+		console.log(chalk.greenBright('Changed 1 user passwordReset status'));
+	}
 };

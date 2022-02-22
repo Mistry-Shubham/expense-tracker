@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { IoMailUnreadSharp } from 'react-icons/io5';
 import { USER_REGISTER_RESET } from '../constants/userConstants';
+import './screens-style.css';
 
 const VerifyScreen = () => {
 	const dispatch = useDispatch();

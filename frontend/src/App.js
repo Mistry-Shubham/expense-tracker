@@ -6,6 +6,7 @@ import currencies from './currencies';
 import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
+import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import VerifyScreen from './screens/VerifyScreen';
@@ -47,6 +48,7 @@ const App = () => {
 						<Routes>
 							<Route path="/" element={<HomeScreen />} />
 							<Route path="/login" element={<LoginScreen />} />
+							<Route path="/reset-password" element={<ResetPasswordScreen />} />
 							<Route path="/profile" element={<ProfileScreen />} />
 							<Route path="/register" element={<RegisterScreen />} />
 							<Route path="/verify" element={<VerifyScreen />} />
