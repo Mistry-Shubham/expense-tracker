@@ -76,14 +76,14 @@ export const registerUser = asyncHandler(async (req, res) => {
 			const URL = `${mainUrl}/api/users/verify/${userVeficationToken}`;
 			sendMail(
 				{
-					user: process.env.GMAIL_USER,
-					pass: process.env.GMAIL_PASS,
 					receiver: user.email,
 					firstName: user.firstName,
 					lastName: user.lastName,
 				},
 				URL
-			);
+			)
+				.then((result) => console.log('Verification email Sent'))
+				.catch((err) => console.error(`Email send error - ${err.message}`));
 		}
 	} else {
 		res.status(400);
@@ -302,15 +302,15 @@ export const userPasswordReset = asyncHandler(async (req, res) => {
 				const URL = `${mainUrl}/api/users/password-reset/step2/${passwordResetToken}`;
 				sendMail(
 					{
-						user: process.env.GMAIL_USER,
-						pass: process.env.GMAIL_PASS,
 						receiver: user.email,
 						firstName: user.firstName,
 						lastName: user.lastName,
 						purpose: 'password-reset',
 					},
 					URL
-				);
+				)
+					.then((result) => console.log('Password reset email Sent'))
+					.catch((err) => console.error(`Email send error - ${err.message}`));
 			}
 		} else {
 			res.status(404);
