@@ -2,6 +2,7 @@ import {
 	USER_LOGIN_REQUEST,
 	USER_LOGIN_SUCCESS,
 	USER_LOGIN_FAIL,
+	USER_LOGIN_RESET,
 	USER_LOGOUT,
 	USER_PROFILE_REQUEST,
 	USER_PROFILE_SUCCESS,
@@ -19,6 +20,10 @@ import {
 	USER_RESET_PASSWORD_SUCCESS,
 	USER_RESET_PASSWORD_FAIL,
 	USER_RESET_PASSWORD_RESET,
+	USER_RESEND_EMAIL_REQUEST,
+	USER_RESEND_EMAIL_SUCCESS,
+	USER_RESEND_EMAIL_FAIL,
+	USER_RESEND_EMAIL_RESET,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -29,6 +34,8 @@ export const userLoginReducer = (state = {}, action) => {
 			return { loading: false, userInfo: action.payload };
 		case USER_LOGIN_FAIL:
 			return { loading: false, error: action.payload };
+		case USER_LOGIN_RESET:
+			return {};
 		case USER_LOGOUT:
 			return {};
 		default:
@@ -93,6 +100,21 @@ export const userPasswordResetReducer = (state = {}, action) => {
 		case USER_RESET_PASSWORD_FAIL:
 			return { loading: false, error: action.payload };
 		case USER_RESET_PASSWORD_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
+
+export const userResendEmailReducer = (state = {}, action) => {
+	switch (action.type) {
+		case USER_RESEND_EMAIL_REQUEST:
+			return { loading: true };
+		case USER_RESEND_EMAIL_SUCCESS:
+			return { loading: false, resendInfo: action.payload };
+		case USER_RESEND_EMAIL_FAIL:
+			return { loading: false, error: action.payload };
+		case USER_RESEND_EMAIL_RESET:
 			return {};
 		default:
 			return state;

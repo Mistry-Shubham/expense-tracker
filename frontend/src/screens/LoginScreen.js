@@ -7,6 +7,7 @@ import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { login } from '../actions/userActions';
+import { USER_LOGIN_RESET } from '../constants/userConstants';
 import './screens-style.css';
 
 const LoginScreen = () => {
@@ -21,6 +22,8 @@ const LoginScreen = () => {
 	useEffect(() => {
 		if (userInfo) {
 			navigate('/');
+		} else {
+			dispatch({ type: USER_LOGIN_RESET });
 		}
 	}, [userInfo, navigate]);
 
@@ -94,9 +97,15 @@ const LoginScreen = () => {
 						</Link>
 					</p>
 				</FormContainer>
-				{/* //^ Resend verification Code */}
-				{error && error.includes('credentials') && (
-					<p style={{ textAlign: 'center' }}>Hello</p>
+				{error && error.includes('Your account is not verified') && (
+					<p className="resend-link">
+						<Link
+							className="remove-link-underline"
+							to="/resend-verfication-email"
+						>
+							Resend verfication code
+						</Link>
+					</p>
 				)}
 			</div>
 		</div>

@@ -6,7 +6,8 @@ import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import sendMail from '../utils/userVerficationMail.js';
 
-const mainUrl = 'http://localhost:5000';
+const mainUrl =
+	process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
 
 //@desc   	Register new user
 //route     POST/api/users
@@ -348,7 +349,10 @@ export const userPasswordReset = asyncHandler(async (req, res) => {
 						user.passwordReset = false;
 
 						await user.save();
-						res.status(200).json({ message: 'Password Reset Successful' });
+						res.status(200).json({
+							status: 'success',
+							message: 'Password Reset Successful',
+						});
 					} else {
 						res.status(400);
 						throw new Error('Check paassword and try again');
@@ -365,6 +369,75 @@ export const userPasswordReset = asyncHandler(async (req, res) => {
 			res.status(400);
 			throw new Error('Invalid data');
 		}
+	}
+});
+
+//@desc     Resent Verifiction Email
+//route     PUT/api/users/resend-verification
+//access    public
+export const resendVerificatinEmail = asyncHandler(async (req, res) => {
+	const { email, password } = req.body;
+
+	const user = await User.findOne({ email });
+	if (user) {
+		if (!user.isVerified) {
+			if (user && (await user.matchPassword(password))) {
+				const newUser = await User.create({
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email,
+					password,
+					dateOfBirth: user.dateOfBirth,
+					age: user.age,
+					defaultCurrency: user.defaultCurrency,
+				});
+				if (newUser) {
+					await User.deleteOne({ _id: user._id });
+					const userVeficationToken = generateToken(
+						newUser._id,
+						process.env.USER_VERFICATION_SECRET,
+						'30m'
+					);
+					const URL = `${mainUrl}/api/users/verify/${userVeficationToken}`;
+					sendMail(
+						{
+							receiver: newUser.email,
+							firstName: newUser.firstName,
+							lastName: newUser.lastName,
+						},
+						URL
+					)
+						.then((result) => {
+							console.log('Verification email Resent');
+							res.status(200).json({
+								status: 'success',
+								result: result.accepted[0],
+							});
+						})
+						.catch((err) => {
+							console.error(`Email resend error - ${err.message}`);
+							res.status(424).json({
+								status: 'failed',
+								error: err.message,
+							});
+						});
+				} else {
+					// res.status()
+					throw new Error('Something went wrong please try again');
+				}
+			} else {
+				res.status(401);
+				throw new Error('Incorrect password');
+			}
+		} else {
+			res.status(400);
+			throw new Error('User already verified');
+		}
+	} else {
+		res.status(404);
+		throw new Error(
+			'User not found make sure you have registered. If yes then you failed to verify account before expiration please register again.'
+		);
 	}
 });
 

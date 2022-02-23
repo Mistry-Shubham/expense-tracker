@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { defaultAppContext } from './Contexts';
-import currencies from './currencies';
 import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
+import ResendEmail from './screens/ResendEmail';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import VerifyScreen from './screens/VerifyScreen';
@@ -49,6 +49,10 @@ const App = () => {
 							<Route path="/" element={<HomeScreen />} />
 							<Route path="/login" element={<LoginScreen />} />
 							<Route path="/reset-password" element={<ResetPasswordScreen />} />
+							<Route
+								path="/resend-verfication-email"
+								element={<ResendEmail />}
+							/>
 							<Route path="/profile" element={<ProfileScreen />} />
 							<Route path="/register" element={<RegisterScreen />} />
 							<Route path="/verify" element={<VerifyScreen />} />

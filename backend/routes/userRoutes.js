@@ -6,6 +6,7 @@ import {
 	updateUserProfile,
 	verifyUser,
 	userPasswordReset,
+	resendVerificatinEmail,
 } from '../controllers/userControllers.js';
 import { loginCheck } from '../middlewares/authMiddleware.js';
 
@@ -14,6 +15,7 @@ const router = express.Router();
 router.route('/').post(registerUser);
 router.route('/login').post(authUser);
 router.route('/verify/:token').get(verifyUser);
+router.route('/resend-verification').put(resendVerificatinEmail);
 router
 	.route('/password-reset/:step/:token')
 	.post(userPasswordReset)

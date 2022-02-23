@@ -18,6 +18,9 @@ import {
 	USER_RESET_PASSWORD_REQUEST,
 	USER_RESET_PASSWORD_SUCCESS,
 	USER_RESET_PASSWORD_FAIL,
+	USER_RESEND_EMAIL_REQUEST,
+	USER_RESEND_EMAIL_SUCCESS,
+	USER_RESEND_EMAIL_FAIL,
 } from '../constants/userConstants';
 import { EXPENSE_BY_ID_RESET } from '../constants/expenseConstants';
 
@@ -171,6 +174,34 @@ export const passwordReset = (newData) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: USER_RESET_PASSWORD_FAIL,
+			payload:
+				err.response && err.response.data.message
+					? err.response.data.message
+					: err.message,
+		});
+	}
+};
+
+export const resendEmail = (email, password) => async (dispatch) => {
+	try {
+		dispatch({ type: USER_RESEND_EMAIL_REQUEST });
+
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		const { data } = await axios.put(
+			'/api/users/resend-verification',
+			{ email, password },
+			config
+		);
+
+		dispatch({ type: USER_RESEND_EMAIL_SUCCESS, payload: data });
+	} catch (err) {
+		dispatch({
+			type: USER_RESEND_EMAIL_FAIL,
 			payload:
 				err.response && err.response.data.message
 					? err.response.data.message
