@@ -35,7 +35,7 @@ const RegisterScreen = () => {
 		if (selectCurrency) {
 			setCurrency(currencies.find((item) => item.id === selectCurrency));
 		}
-	}, [selectCurrency, currencies]);
+	}, [selectCurrency]);
 
 	useEffect(() => {
 		if (success) {

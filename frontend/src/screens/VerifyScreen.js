@@ -29,7 +29,7 @@ const VerifyScreen = () => {
 		} else {
 			navigate('/register');
 		}
-	}, [registerInfo, userInfo]);
+	}, [registerInfo, userInfo, navigate]);
 
 	useEffect(() => {
 		if (counter === 0) {
@@ -39,7 +39,7 @@ const VerifyScreen = () => {
 		const timer =
 			counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
 		return () => clearInterval(timer);
-	}, [counter]);
+	}, [counter, dispatch, navigate]);
 
 	return (
 		<div className="main-container">

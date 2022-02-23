@@ -28,14 +28,14 @@ const ResendEmail = () => {
 			setPassword('');
 			dispatch({ type: USER_RESEND_EMAIL_RESET });
 		}
-	}, [resendInfo]);
+	}, [resendInfo, navigate, dispatch]);
 
 	useEffect(() => {
 		if (userInfo) {
 			navigate('/');
 		}
 		dispatch({ type: USER_RESEND_EMAIL_RESET });
-	}, [userInfo, navigate]);
+	}, [userInfo, navigate, dispatch]);
 
 	const resendEmailHandler = (e) => {
 		e.preventDefault();

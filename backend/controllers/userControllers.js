@@ -7,7 +7,9 @@ import generateToken from '../utils/generateToken.js';
 import sendMail from '../utils/userVerficationMail.js';
 
 const mainUrl =
-	process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000';
+	process.env.NODE_ENV === 'production'
+		? 'https://expensee-trackerr.herokuapp.com'
+		: 'http://localhost:5000';
 
 //@desc   	Register new user
 //route     POST/api/users

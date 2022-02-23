@@ -128,7 +128,7 @@ export const addExpenseToList =
 				},
 			};
 
-			const { data } = await axios.put(`/api/expenses/${id}`, expense, config);
+			await axios.put(`/api/expenses/${id}`, expense, config);
 
 			dispatch({ type: ADD_EXPENSE_TO_LIST_SUCCESS });
 		} catch (err) {

@@ -38,14 +38,14 @@ const ResetPasswordScreen = () => {
 			setpage(true);
 			setresetId(resetInfo.resetId);
 		}
-	}, [resetInfo]);
+	}, [resetInfo, dispatch, navigate]);
 
 	useEffect(() => {
 		if (userInfo) {
 			navigate('/');
 		}
 		dispatch({ type: USER_RESET_PASSWORD_RESET });
-	}, [navigate, userInfo]);
+	}, [navigate, userInfo, dispatch]);
 
 	const emailSubmitHndler = (e) => {
 		e.preventDefault();

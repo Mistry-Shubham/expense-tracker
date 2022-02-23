@@ -25,7 +25,7 @@ const LoginScreen = () => {
 		} else {
 			dispatch({ type: USER_LOGIN_RESET });
 		}
-	}, [userInfo, navigate]);
+	}, [userInfo, navigate, dispatch]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
