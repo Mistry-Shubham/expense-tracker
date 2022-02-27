@@ -12,6 +12,8 @@ import RegisterScreen from './screens/RegisterScreen';
 import VerifyScreen from './screens/VerifyScreen';
 import ExpenseScreen from './screens/ExpenseScreen';
 import ExpenseEditScreen from './screens/ExpenseEditScreen';
+import MailVerifyScreen from './screens/MailVerifyScreen';
+import MailPasswordResetScreen from './screens/MailPasswordResetScreen';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -58,6 +60,14 @@ const App = () => {
 							<Route path="/verify" element={<VerifyScreen />} />
 							<Route path="/expense/:id" element={<ExpenseScreen />} />
 							<Route path="/expense/:id/edit" element={<ExpenseEditScreen />} />
+							<Route
+								path="/users/verify/:token"
+								element={<MailVerifyScreen />}
+							/>
+							<Route
+								path="/users/password-reset/:token"
+								element={<MailPasswordResetScreen />}
+							/>
 						</Routes>
 					</main>
 					<Footer />

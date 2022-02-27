@@ -14,6 +14,9 @@ connectDB();
 const app = express();
 app.use(express.json());
 
+app.use('/api/users', userRoutes);
+app.use('/api/expenses', expenseRoutes);
+
 const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === 'production') {
@@ -27,9 +30,6 @@ if (process.env.NODE_ENV === 'production') {
 		res.send('API is running');
 	});
 }
-
-app.use('/api/users', userRoutes);
-app.use('/api/expenses', expenseRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

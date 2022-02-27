@@ -76,7 +76,7 @@ export const registerUser = asyncHandler(async (req, res) => {
 		);
 
 		if (userVeficationToken) {
-			const URL = `${mainUrl}/api/users/verify/${userVeficationToken}`;
+			const URL = `${mainUrl}/users/verify/${userVeficationToken}`;
 			sendMail(
 				{
 					receiver: user.email,
@@ -263,9 +263,9 @@ export const verifyUser = asyncHandler(async (req, res) => {
 				const verifiedUser = await user.save();
 
 				if (verifiedUser) {
-					res
-						.status(201)
-						.send(`${verifiedUser.firstName} your account is verfied`);
+					res.status(201).send({
+						message: `${verifiedUser.firstName} your account is verfied`,
+					});
 				}
 			} else {
 				res.status(401).send('Token expired signup again');
@@ -302,7 +302,7 @@ export const userPasswordReset = asyncHandler(async (req, res) => {
 			);
 
 			if (passwordResetToken) {
-				const URL = `${mainUrl}/api/users/password-reset/step2/${passwordResetToken}`;
+				const URL = `${mainUrl}/users/password-reset/${passwordResetToken}`;
 				sendMail(
 					{
 						receiver: user.email,
@@ -329,9 +329,9 @@ export const userPasswordReset = asyncHandler(async (req, res) => {
 					{ new: true }
 				);
 				if (user) {
-					res
-						.status(200)
-						.send('Account verified go back and reset your password');
+					res.status(200).send({
+						message: 'Account verified go back and reset your password',
+					});
 				} else {
 					res.status(404);
 					throw new Error('User not found');
@@ -400,7 +400,7 @@ export const resendVerificatinEmail = asyncHandler(async (req, res) => {
 						process.env.USER_VERFICATION_SECRET,
 						'30m'
 					);
-					const URL = `${mainUrl}/api/users/verify/${userVeficationToken}`;
+					const URL = `${mainUrl}/users/verify/${userVeficationToken}`;
 					sendMail(
 						{
 							receiver: newUser.email,

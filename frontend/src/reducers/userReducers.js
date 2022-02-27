@@ -24,6 +24,10 @@ import {
 	USER_RESEND_EMAIL_SUCCESS,
 	USER_RESEND_EMAIL_FAIL,
 	USER_RESEND_EMAIL_RESET,
+	USER_EMAIL_VERIFY_REQUEST,
+	USER_EMAIL_VERIFY_SUCCESS,
+	USER_EMAIL_VERIFY_FAIL,
+	USER_EMAIL_VERIFY_RESET,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -115,6 +119,21 @@ export const userResendEmailReducer = (state = {}, action) => {
 		case USER_RESEND_EMAIL_FAIL:
 			return { loading: false, error: action.payload };
 		case USER_RESEND_EMAIL_RESET:
+			return {};
+		default:
+			return state;
+	}
+};
+
+export const userEmailVerifyReducer = (state = {}, action) => {
+	switch (action.type) {
+		case USER_EMAIL_VERIFY_REQUEST:
+			return { loading: true };
+		case USER_EMAIL_VERIFY_SUCCESS:
+			return { loading: false, verifyInfo: action.payload };
+		case USER_EMAIL_VERIFY_FAIL:
+			return { loading: false, error: action.payload };
+		case USER_EMAIL_VERIFY_RESET:
 			return {};
 		default:
 			return state;

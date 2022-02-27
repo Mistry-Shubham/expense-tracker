@@ -21,6 +21,9 @@ import {
 	USER_RESEND_EMAIL_REQUEST,
 	USER_RESEND_EMAIL_SUCCESS,
 	USER_RESEND_EMAIL_FAIL,
+	USER_EMAIL_VERIFY_REQUEST,
+	USER_EMAIL_VERIFY_SUCCESS,
+	USER_EMAIL_VERIFY_FAIL,
 } from '../constants/userConstants';
 import { EXPENSE_BY_ID_RESET } from '../constants/expenseConstants';
 
@@ -146,7 +149,7 @@ export const register = (user) => async (dispatch) => {
 
 export const passwordReset = (newData) => async (dispatch) => {
 	try {
-		const { email, password, resetId, step } = newData;
+		const { email, password, resetId, step, token } = newData;
 		dispatch({ type: USER_RESET_PASSWORD_REQUEST });
 
 		const config = {
@@ -159,6 +162,13 @@ export const passwordReset = (newData) => async (dispatch) => {
 			const { data } = await axios.post(
 				`/api/users/password-reset/${step}/CZqFzu`,
 				{ email },
+				config
+			);
+			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
+		}
+		if (step === 'step2') {
+			const { data } = await axios.get(
+				`/api/users/password-reset/${step}/${token}`,
 				config
 			);
 			dispatch({ type: USER_RESET_PASSWORD_SUCCESS, payload: data });
@@ -202,6 +212,24 @@ export const resendEmail = (email, password) => async (dispatch) => {
 	} catch (err) {
 		dispatch({
 			type: USER_RESEND_EMAIL_FAIL,
+			payload:
+				err.response && err.response.data.message
+					? err.response.data.message
+					: err.message,
+		});
+	}
+};
+
+export const verifyUserEmail = (token) => async (dispatch) => {
+	try {
+		dispatch({ type: USER_EMAIL_VERIFY_REQUEST });
+
+		const { data } = await axios.get(`/api/users/verify/${token}`);
+
+		dispatch({ type: USER_EMAIL_VERIFY_SUCCESS, payload: data });
+	} catch (err) {
+		dispatch({
+			type: USER_EMAIL_VERIFY_FAIL,
 			payload:
 				err.response && err.response.data.message
 					? err.response.data.message

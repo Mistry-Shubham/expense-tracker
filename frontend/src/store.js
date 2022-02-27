@@ -8,6 +8,7 @@ import {
 	userRegisterReducer,
 	userPasswordResetReducer,
 	userResendEmailReducer,
+	userEmailVerifyReducer,
 } from './reducers/userReducers';
 import {
 	expenseMyListReducer,
@@ -27,6 +28,7 @@ const reducer = combineReducers({
 	userRegister: userRegisterReducer,
 	userPasswordReset: userPasswordResetReducer,
 	userResendEmail: userResendEmailReducer,
+	userEmailVerify: userEmailVerifyReducer,
 	expenseMyList: expenseMyListReducer,
 	expenseCreateNew: expenseCreateNewReducer,
 	expenseGetById: expenseGetByIdReducer,
