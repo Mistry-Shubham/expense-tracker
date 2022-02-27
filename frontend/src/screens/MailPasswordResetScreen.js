@@ -27,7 +27,7 @@ const MailPasswordResetScreen = () => {
 		if (!resetInfo) {
 			dispatch(passwordReset({ step: 'step2', token }));
 		}
-	}, [navigate, dispatch, token, resetInfo]);
+	}, [navigate, dispatch, token, resetInfo, userInfo]);
 
 	return (
 		<div className="main-container">

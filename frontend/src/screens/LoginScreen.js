@@ -7,7 +7,10 @@ import FormContainer, { PasswordInput } from '../components/FormContainer';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { login } from '../actions/userActions';
-import { USER_LOGIN_RESET } from '../constants/userConstants';
+import {
+	USER_LOGIN_RESET,
+	USER_EMAIL_VERIFY_RESET,
+} from '../constants/userConstants';
 import './screens-style.css';
 
 const LoginScreen = () => {
@@ -24,6 +27,7 @@ const LoginScreen = () => {
 			navigate('/');
 		} else {
 			dispatch({ type: USER_LOGIN_RESET });
+			dispatch({ type: USER_EMAIL_VERIFY_RESET });
 		}
 	}, [userInfo, navigate, dispatch]);
 

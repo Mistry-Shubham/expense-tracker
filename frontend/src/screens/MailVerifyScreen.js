@@ -5,7 +5,6 @@ import { RiMailCheckFill, RiMailCloseFill } from 'react-icons/ri';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { verifyUserEmail } from '../actions/userActions';
-import { USER_EMAIL_VERIFY_RESET } from '../constants/userConstants';
 
 // $ window.close() to close tab
 const MailVerifyScreen = () => {
@@ -20,10 +19,6 @@ const MailVerifyScreen = () => {
 	);
 
 	useEffect(() => {
-		dispatch({ type: USER_EMAIL_VERIFY_RESET });
-	}, [dispatch]);
-
-	useEffect(() => {
 		if (userInfo) {
 			navigate('/');
 		}
@@ -31,13 +26,7 @@ const MailVerifyScreen = () => {
 		if (!verifyInfo) {
 			dispatch(verifyUserEmail(token));
 		}
-	}, [navigate, dispatch, token, verifyInfo]);
-
-	useEffect(() => {
-		if (verifyInfo && verifyInfo.message.includes('your account is verfied')) {
-			dispatch({ type: USER_EMAIL_VERIFY_RESET });
-		}
-	}, [dispatch, verifyInfo]);
+	}, [navigate, dispatch, token, verifyInfo, userInfo]);
 
 	return (
 		<div className="main-container">
