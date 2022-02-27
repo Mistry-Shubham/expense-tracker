@@ -281,7 +281,7 @@ export const verifyUser = asyncHandler(async (req, res) => {
 	}
 });
 
-//@desc     Verify User Email
+//@desc     Password Reset Steps
 //route     POST or GET or PUT/api/users/password-reset/:step
 //access    public
 export const userPasswordReset = asyncHandler(async (req, res) => {

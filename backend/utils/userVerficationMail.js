@@ -4,36 +4,39 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLEINT_SECRET = process.env.CLIENT_SECRET;
-const REDIRECT_URI = process.env.REDIRECT_URI;
-const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, REDIRECT_URI } = process.env;
 
 const oAuth2Client = new google.auth.OAuth2(
 	CLIENT_ID,
-	CLEINT_SECRET,
+	CLIENT_SECRET,
 	REDIRECT_URI
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 const sendMail = async (data, URL) => {
 	try {
-		const accessToken = await oAuth2Client.getAccessToken();
+		const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
 
 		const transport = nodemailer.createTransport({
 			service: 'gmail',
+			host: 'smtp.gmail.com',
+			port: 465,
+			secure: true,
 			auth: {
 				type: 'OAuth2',
 				user: process.env.GMAIL_USER,
 				clientId: CLIENT_ID,
-				clientSecret: CLEINT_SECRET,
+				clientSecret: CLIENT_SECRET,
 				refreshToken: REFRESH_TOKEN,
-				accessToken: accessToken,
+				accessToken: ACCESS_TOKEN,
+			},
+			tls: {
+				rejectUnauthorized: false,
 			},
 		});
 
 		const mailOptions = {
-			from: process.env.GMAIL_USER,
+			from: `Expense Tracker <${process.env.GMAIL_USER}>`,
 			to: data.receiver,
 			subject:
 				data.purpose === 'password-reset'
