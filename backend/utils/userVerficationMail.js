@@ -25,9 +25,9 @@ const sendMail = async (data, URL) => {
 			auth: {
 				type: 'OAuth2',
 				user: process.env.GMAIL_USER,
-				clientId: CLIENT_ID,
-				clientSecret: CLIENT_SECRET,
-				refreshToken: REFRESH_TOKEN,
+				clientId: process.env.CLIENT_ID,
+				clientSecret: process.env.CLIENT_SECRET,
+				refreshToken: process.env.REFRESH_TOKEN,
 				accessToken: ACCESS_TOKEN,
 			},
 			tls: {
