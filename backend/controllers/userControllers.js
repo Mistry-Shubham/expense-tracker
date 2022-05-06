@@ -120,6 +120,7 @@ export const authUser = asyncHandler(async (req, res) => {
 					defaultCurrency: user.defaultCurrency,
 					isVerified: user.isVerified,
 					token: generateToken(user._id),
+					expiry: Date.now() + 2592000000,
 				});
 			} else {
 				res.status(401);

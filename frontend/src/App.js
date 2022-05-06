@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { defaultAppContext } from './Contexts';
@@ -15,9 +16,12 @@ import ExpenseEditScreen from './screens/ExpenseEditScreen';
 import MailVerifyScreen from './screens/MailVerifyScreen';
 import MailPasswordResetScreen from './screens/MailPasswordResetScreen';
 import Footer from './components/Footer';
+import { logout } from './actions/userActions';
 import './App.css';
 
 const App = () => {
+	const dispatch = useDispatch();
+
 	const [addExpenseSection, setAddExpenseSection] = useState(false);
 	const [defaultCurrency, setDefaultCurrency] = useState({
 		name: 'Indian Rupee',
@@ -31,6 +35,11 @@ const App = () => {
 	useEffect(() => {
 		if (userInfo && userInfo.defaultCurrency) {
 			setDefaultCurrency(userInfo.defaultCurrency);
+		}
+
+		if (userInfo && userInfo.expiry < +Date.now()) {
+			console.log(new Date(userInfo.expiry));
+			dispatch(logout());
 		}
 	}, [userInfo]);
 
