@@ -1,14 +1,14 @@
+import chalk from 'chalk';
 import asyncHandler from 'express-async-handler';
 import jwt from 'jsonwebtoken';
 import schedule from 'node-schedule';
-import chalk from 'chalk';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
 import sendMail from '../utils/userVerficationMail.js';
 
 const mainUrl =
 	process.env.NODE_ENV === 'production'
-		? 'https://expensee-trackerr.herokuapp.com'
+		? 'https://expensee-trackerr.cyclic.app/'
 		: 'http://localhost:5000';
 
 //@desc   	Register new user

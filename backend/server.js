@@ -1,11 +1,11 @@
+import chalk from 'chalk';
+import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
-import dotenv from 'dotenv';
-import chalk from 'chalk';
 import connectDB from './config/db.js';
-import userRoutes from './routes/userRoutes.js';
+import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 import expenseRoutes from './routes/expenseRoutes.js';
-import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -19,7 +19,7 @@ app.use('/api/expenses', expenseRoutes);
 
 const __dirname = path.resolve();
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV) {
 	app.use(express.static(path.join(__dirname, '/frontend/build')));
 
 	app.get('*', (req, res) => {

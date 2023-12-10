@@ -1,21 +1,11 @@
-import nodemailer from 'nodemailer';
-import { google } from 'googleapis';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 
-const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, REDIRECT_URI } = process.env;
-
-const oAuth2Client = new google.auth.OAuth2(
-	CLIENT_ID,
-	CLIENT_SECRET,
-	REDIRECT_URI
-);
-oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
-
 const sendMail = async (data, URL) => {
 	try {
-		const ACCESS_TOKEN = await oAuth2Client.getAccessToken();
+		const { GMAIL_APP_PASS, GMAIL_USER } = process.env;
 
 		const transport = nodemailer.createTransport({
 			service: 'gmail',
@@ -23,15 +13,8 @@ const sendMail = async (data, URL) => {
 			port: 465,
 			secure: true,
 			auth: {
-				type: 'OAuth2',
-				user: process.env.GMAIL_USER,
-				clientId: process.env.CLIENT_ID,
-				clientSecret: process.env.CLIENT_SECRET,
-				refreshToken: process.env.REFRESH_TOKEN,
-				accessToken: ACCESS_TOKEN,
-			},
-			tls: {
-				rejectUnauthorized: false,
+				user: GMAIL_USER,
+				pass: GMAIL_APP_PASS,
 			},
 		});
 
@@ -56,7 +39,16 @@ const sendMail = async (data, URL) => {
 			<p><a href=${URL} >Click here to verify your email.</a></p></html>`,
 		};
 
-		const result = await transport.sendMail(mailOptions);
+		const result = await new Promise((resolve, reject) => {
+			transport.sendMail(mailOptions, (err, info) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(info);
+				}
+			});
+		});
 		return result;
 	} catch (err) {
 		return err;
