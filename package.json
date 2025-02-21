@@ -1,39 +1,40 @@
 {
-	"name": "expense-tracker",
-	"version": "1.0.0",
-	"description": "Expense tracking app created using create react app to track daily expenses",
-	"main": "server.js",
-	"type": "module",
-	"scripts": {
-		"start": "node backend/server",
-		"server": "nodemon backend/server",
-		"client": "npm start --prefix frontend",
-		"dev": "concurrently \"npm run server\" \"npm run client\""
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Mistry-Shubham/expense-tracker.git"
-	},
-	"author": "Shubham Mistry",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/Mistry-Shubham/expense-tracker/issues"
-	},
-	"homepage": "https://github.com/Mistry-Shubham/expense-tracker#readme",
-	"dependencies": {
-		"bcryptjs": "^2.4.3",
-		"chalk": "^5.0.0",
-		"dotenv": "^14.3.0",
-		"express": "^4.17.2",
-		"express-async-handler": "^1.2.0",
-		"googleapis": "^95.0.0",
-		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^6.1.8",
-		"node-schedule": "^2.1.0",
-		"nodemailer": "^6.7.2"
-	},
-	"devDependencies": {
-		"concurrently": "^7.0.0",
-		"nodemon": "^2.0.15"
-	}
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "Expense tracking app created using create react app to track daily expenses",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server",
+    "server": "nodemon backend/server",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm i && echo build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mistry-Shubham/expense-tracker.git"
+  },
+  "author": "Shubham Mistry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mistry-Shubham/expense-tracker/issues"
+  },
+  "homepage": "https://github.com/Mistry-Shubham/expense-tracker#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chalk": "^5.0.0",
+    "dotenv": "^14.3.0",
+    "express": "^4.17.2",
+    "express-async-handler": "^1.2.0",
+    "googleapis": "^95.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.8",
+    "node-schedule": "^2.1.0",
+    "nodemailer": "^6.7.2"
+  },
+  "devDependencies": {
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15"
+  }
 }
